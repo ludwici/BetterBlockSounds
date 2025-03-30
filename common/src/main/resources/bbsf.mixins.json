@@ -1,12 +1,13 @@
 {
   "required": true,
+  "package": "com.ludwici.bbsf.mixin",
+  "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
-  "package": "com.ordana.bbs.mixins",
-  "compatibilityLevel": "JAVA_17",
   "client": [
     "SoundsMixin"
   ],
-  "mixins": [],
+  "mixins": [
+  ],
   "injectors": {
     "defaultRequire": 1
   }

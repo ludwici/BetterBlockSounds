@@ -1,24 +1,37 @@
 {
   "schemaVersion": 1,
-  "id": "bbs",
+  "id": "bbsf",
   "version": "${version}",
-  "name": "Better Block Sounds",
-  "description": "Block sounds, but better!",
+  "name": "Better Block Sounds Fork",
+  "description": "Block sounds, but better! (forked version)",
   "authors": [
-    "Ordana"
+    "ludwici"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/better-block-sounds",
-    "sources": "https://github.com/AstralOrdana/BetterBlockSounds"
+    "homepage": "https://github.com/ludwici/BetterBlockSounds",
+    "sources": "https://github.com/ludwici/BetterBlockSounds"
   },
   "license": "LGPLv3",
-  "icon": "icon.png",
+  "icon": "logo.png",
   "environment": "*",
-  "entrypoints": {},
+  "entrypoints": {
+    "main": [
+      "com.ludwici.fabric.BBSFModFabric"
+    ],
+    "client": [
+      "com.ludwici.fabric.client.BBSFModFabricClient"
+    ]
+  },
   "mixins": [
-    "bbs.mixins.json"
+    "bbsf.mixins.json"
   ],
   "depends": {
-    "minecraft": ">=1.20"
+    "fabricloader": ">=0.16.10",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
   }
 }
