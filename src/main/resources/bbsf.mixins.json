@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.ludwici.bbsf.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "SoundsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
