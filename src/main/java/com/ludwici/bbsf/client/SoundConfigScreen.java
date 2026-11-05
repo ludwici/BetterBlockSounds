@@ -60,33 +60,29 @@ public final class SoundConfigScreen {
                     SoundConfigManager.save(data);
                 });
 
-        ConfigCategory.Builder typesCategory = null;
-        int index = 0;
+        ConfigCategory.Builder vanillaTypes = ConfigCategory.createBuilder().name(Component.translatable("config.bbsf.vanilla_types"));
+        ConfigCategory.Builder customTypes = ConfigCategory.createBuilder().name(Component.translatable("config.bbsf.custom_types"));
 
         for (Map.Entry<String, SoundConfigData.SoundDefinition> entry : data.soundTypes.entrySet()) {
-            if (index % 8 == 0) {
-                if (typesCategory != null) {
-                    builder.category(typesCategory.build());
-                }
-
-                typesCategory = ConfigCategory.createBuilder().name(Component.translatable("config.bbsf.types", index / 8 + 1));
-            }
-
+            String id = entry.getKey();
             SoundConfigData.SoundDefinition definition = entry.getValue();
-            SoundConfigData.SoundDefinition original = defaults.soundTypes.get(entry.getKey());
+            SoundConfigData.SoundDefinition original = defaults.soundTypes.get(id);
 
             if (original == null) {
                 original = definition;
             }
 
-            OptionGroup group = createTypeGroup(entry.getKey(), definition, original);
-            typesCategory.group(group);
-            index++;
+            OptionGroup group = createTypeGroup(id, definition, original);
+
+            if (id.startsWith("vanilla_") && defaults.soundTypes.containsKey(id)) {
+                vanillaTypes.group(group);
+            } else {
+                customTypes.group(group);
+            }
         }
 
-        if (typesCategory != null) {
-            builder.category(typesCategory.build());
-        }
+        builder.category(vanillaTypes.build());
+        builder.category(customTypes.build());
 
         return builder.build().generateScreen(parent);
     }
