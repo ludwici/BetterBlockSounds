@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "bbsf",
+	"version": "${version}",
+	"name": "Better Block Sounds Fork",
+	"description": "Block sounds, but better! (forked version)",
+	"authors": [
+		"ludwici"
+	],
+	"contact": {
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/better-block-sounds-fork",
+		"sources": "https://github.com/ludwici/BetterBlockSounds"
+	},
+	"license": "LGPLv3",
+	"icon": "assets/bbsf/logo.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.ludwici.bbsf.BetterBlockSoundsFork"
+		]
+	},
+	"mixins": [
+		"bbsf.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"java": ">=25",
+		"fabric-api": ">=0.145.1+26.1"
+	}
+}
