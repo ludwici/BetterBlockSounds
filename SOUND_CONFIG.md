@@ -1,10 +1,10 @@
-# Sound configuration (Fabric 1.21.1)
+# Sound configuration (Fabric 26.1.2)
 
 Better Block Sounds Fork works without YACL or Mod Menu. On the first launch it creates `config/bbsf/sounds.json` using the bundled sound definitions and block-tag rules.
 
 ## In-game editor
 
-Install YetAnotherConfigLib **3.6.6 for Fabric 1.21.1** and Mod Menu **11.0.3** to use the **Configure** button in Mod Menu. Both mods are optional: BBSF runs with neither, and manual JSON editing remains fully available. The former `/bbsf config` command was removed because opening the GUI from the command handler was unreliable.
+Install YetAnotherConfigLib **3.9.7+26.1-fabric** and Mod Menu **18.0.2** to use the **Configure** button in Mod Menu. Both mods are optional; BBSF runs without either, using manual JSON editing. The former `/bbsf config` command has been removed.
 
 The editor has four tabs:
 
