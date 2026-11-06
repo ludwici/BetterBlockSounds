@@ -1,0 +1,20 @@
+{
+  "config.bbsf.title": "Better Block Sounds Fork",
+  "config.bbsf.rules": "Block rules",
+  "config.bbsf.rules.description": "Rules apply in order. The last matching rule wins.",
+  "config.bbsf.rule_list": "Blocks and tags",
+  "config.bbsf.rule_list.description": "Format: #namespace:tag=sound_type or namespace:block=sound_type. Add, delete or reorder rules here.",
+  "config.bbsf.volume": "Volume",
+  "config.bbsf.pitch": "Pitch",
+  "config.bbsf.break": "Break event",
+  "config.bbsf.step": "Step event",
+  "config.bbsf.place": "Place event",
+  "config.bbsf.hit": "Hit event",
+  "config.bbsf.fall": "Fall event",
+  "message.bbsf.reloaded": "Better Block Sounds Fork: sound configuration reloaded.",
+  "config.bbsf.manage_types": "Manage sound types",
+  "config.bbsf.type_list": "Sound type identifiers",
+  "config.bbsf.type_list.description": "Add, rename or delete sound types. New definitions copy stone_ore; save and reopen this screen to edit their events. Remove or update rules that reference deleted IDs.",
+  "config.bbsf.vanilla_types": "Vanilla sound types",
+  "config.bbsf.custom_types": "Custom sound types"
+}
