@@ -1,12 +1,12 @@
-name: Build Fabric 1.21.1
+name: Build Fabric 1.20.1
 
 on:
   push:
     branches:
-      - 1.21.1-fabric
+      - 1.20.1-fabric
   pull_request:
     branches:
-      - 1.21.1-fabric
+      - 1.20.1-fabric
 
 jobs:
   build:
@@ -18,9 +18,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
-      - name: Build
-        run: ./gradlew build --no-daemon
+      - run: bash ./gradlew build --no-daemon
       - uses: actions/upload-artifact@v4
+        if: success()
         with:
-          name: bbsf-fabric-1.21.1
+          name: bbsf-fabric-1.20.1
           path: build/libs/*.jar
