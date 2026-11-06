@@ -7,7 +7,7 @@ import com.ludwici.bbsf.BetterBlockSoundsFork;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
@@ -151,7 +151,7 @@ public final class SoundConfigManager {
 
             boolean tag = rule.target.startsWith("#");
             String target = tag ? rule.target.substring(1) : rule.target;
-            ResourceLocation id = ResourceLocation.tryParse(target);
+            Identifier id = Identifier.tryParse(target);
 
             if (id == null) {
                 LOGGER.warn("Invalid block or tag ID '{}'.", rule.target);
@@ -177,7 +177,7 @@ public final class SoundConfigManager {
     }
 
     private static SoundEvent event(String name) {
-        ResourceLocation id = name == null ? null : ResourceLocation.tryParse(name);
+        Identifier id = name == null ? null : Identifier.tryParse(name);
 
         if (id == null) {
             throw new IllegalArgumentException("Invalid sound event ID: " + name);
@@ -281,6 +281,6 @@ public final class SoundConfigManager {
         }
     }
 
-    private record CompiledRule(TagKey<Block> tag, ResourceLocation blockId, SoundType soundType) {
+    private record CompiledRule(TagKey<Block> tag, Identifier blockId, SoundType soundType) {
     }
 }
