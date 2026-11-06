@@ -52,7 +52,7 @@ A request with a due time in the past is picked up by the push-triggered workflo
 
 Before any upload, the workflow checks that both secrets exist, verifies the pinned commit and its finalized Markdown changelog, and moves due requests to `.github/release-requests/claimed/` in a dedicated commit. Claimed requests are never published again automatically. If the build or a platform upload fails, inspect both platform projects before explicitly authorizing a new request; the upload may have partially succeeded.
 
-GitHub scheduled runs are best effort and can start later than the requested time. Do not rely on minute-exact publication. For a stricter launch time, trigger a manually approved request close to the intended time.
+GitHub scheduled runs are best effort and can start later than the requested time. Do not rely on minute-exact publication. For a stricter launch time, trigger a manually approved request close to the intended time. CurseForge may additionally delay the public appearance of uploaded files while moderation is pending; scheduling an upload cannot guarantee the exact time it becomes publicly downloadable.
 
 ## How to request releases through ChatGPT
 
