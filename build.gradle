@@ -137,6 +137,7 @@ publishMods {
     modrinth {
         projectId = "ZnMA9t3T"
         accessToken = providers.environmentVariable("MODRINTH_TOKEN").orElse(providers.gradleProperty("MODRINTH_TOKEN"))
+        version = "${minecraft_version}+${mod_version}"
         minecraftVersions.add(minecraft_version)
     }
 }
