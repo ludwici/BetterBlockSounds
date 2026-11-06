@@ -78,7 +78,7 @@ public final class BlockPreviewCategory {
 
         for (Map.Entry<String, List<BlockEntry>> group : groups.entrySet()) {
             List<BlockEntry> entries = group.getValue();
-            entries.sort(Comparator.comparing(entry -> entry.item().getDescription().getString(), String.CASE_INSENSITIVE_ORDER));
+            entries.sort(Comparator.comparing(BlockEntry::blockId));
             OptionGroup.Builder options = OptionGroup.createBuilder()
                     .name(Component.literal(group.getKey()));
 
