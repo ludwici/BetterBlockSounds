@@ -44,6 +44,7 @@ public final class SoundConfigScreen {
         YetAnotherConfigLib.Builder builder = YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("config.bbsf.title"))
                 .category(rules)
+                .category(BlockPreviewCategory.create(data))
                 .category(ConfigCategory.createBuilder()
                         .name(Component.translatable("config.bbsf.manage_types"))
                         .group(ListOption.<String>createBuilder()
