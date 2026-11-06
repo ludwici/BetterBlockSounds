@@ -9,6 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
@@ -59,7 +60,7 @@ public final class BlockPreviewCategory {
         }
 
         for (List<BlockEntry> entries : groups.values()) {
-            entries.sort(java.util.Comparator.comparing(entry -> entry.item().getDescription().getString(), String.CASE_INSENSITIVE_ORDER));
+            entries.sort(java.util.Comparator.comparing(entry -> new ItemStack(entry.item()).getHoverName().getString(), String.CASE_INSENSITIVE_ORDER));
         }
 
         return groups;
