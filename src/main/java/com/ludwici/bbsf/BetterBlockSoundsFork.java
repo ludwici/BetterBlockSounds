@@ -1,15 +1,20 @@
 package com.ludwici.bbsf;
 
+import com.ludwici.bbsf.client.BetterBlockSoundsClient;
 import com.ludwici.bbsf.config.SoundConfigManager;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 @Mod(BetterBlockSoundsFork.MODID)
-public class BetterBlockSoundsFork {
+public final class BetterBlockSoundsFork {
     public static final String MODID = "bbsf";
 
-    public BetterBlockSoundsFork(IEventBus modEventBus, ModContainer container) {
+    public BetterBlockSoundsFork() {
         SoundConfigManager.load();
+
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            BetterBlockSoundsClient.register();
+        }
     }
 }

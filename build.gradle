@@ -1,70 +1,34 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.141'
+    id 'net.neoforged.moddev.legacyforge' version '2.0.141'
     id 'idea'
 }
 
-tasks.named('wrapper', Wrapper).configure {
-    distributionType = Wrapper.DistributionType.BIN
-}
+version = project.mod_version
+group = project.mod_group_id
 
-version = mod_version
-group = mod_group_id
-
-sourceSets.main.resources {
-    srcDir('src/generated/resources')
-
-    exclude("**/*.bbmodel") // BlockBench project files
-    exclude("src/generated/**/.cache") // datagen cache files
+base {
+    archivesName = "${mod_id}-forge-${minecraft_version}"
 }
 
 repositories {
-    maven { url = 'https://maven.isxander.dev/releases' }
-}
-
-base {
-    archivesName = "${mod_id}-neoforge-${minecraft_version}"
-}
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-
-neoForge {
-    version = project.neo_version
-
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
+    maven {
+        url = 'https://maven.isxander.dev/releases'
     }
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+legacyForge {
+    version = "${minecraft_version}-${forge_version}"
 
     runs {
         client {
             client()
-
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
-
         server {
             server()
-            programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        gameTestServer {
-            type = "gameTestServer"
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        data {
-            data()
-
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-        }
-
-        configureEach {
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-
-            logLevel = org.slf4j.event.Level.DEBUG
         }
     }
 
@@ -75,53 +39,30 @@ neoForge {
     }
 }
 
-configurations {
-    runtimeClasspath.extendsFrom localRuntime
-}
-
 dependencies {
-    compileOnly "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+    modCompileOnly "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 }
 
-var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
-    var replaceProperties = [
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            loader_version_range   : loader_version_range,
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_license            : mod_license,
-            mod_version            : mod_version,
+def generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    def values = [
+        mod_id: mod_id,
+        mod_version: mod_version,
+        mod_name: mod_name,
+        mod_license: mod_license
     ]
-    inputs.properties replaceProperties
-    expand replaceProperties
+    inputs.properties values
+    expand values
     from "src/main/templates"
     into "build/generated/sources/modMetadata"
 }
-sourceSets.main.resources.srcDir generateModMetadata
-neoForge.ideSyncTask generateModMetadata
 
-publishing {
-    publications {
-        register('mavenJava', MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url "file://${project.projectDir}/repo"
-        }
-    }
+sourceSets.main.resources.srcDir generateModMetadata
+
+tasks.named("jar") {
+    manifest.attributes(["MixinConfigs": "bbsf.mixins.json"])
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-}
-
-idea {
-    module {
-        downloadSources = true
-        downloadJavadoc = true
-    }
+    options.encoding = 'UTF-8'
+    options.release = 17
 }

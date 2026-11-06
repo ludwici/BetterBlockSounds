@@ -3,14 +3,13 @@ package com.ludwici.bbsf.mixin;
 import com.ludwici.bbsf.config.SoundConfigManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(BlockBehaviour.class)
+@Mixin(Block.class)
 public abstract class SoundsMixin {
     @Shadow
     protected abstract Block asBlock();

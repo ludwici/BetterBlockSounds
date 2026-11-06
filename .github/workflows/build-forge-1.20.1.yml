@@ -1,9 +1,13 @@
-name: Build NeoForge 1.21.1
+name: Build Forge 1.20.1
+
 on:
   push:
-    branches: ['1.21.1']
+    branches:
+      - 1.20.1-neo
   pull_request:
-    branches: ['1.21.1']
+    branches:
+      - 1.20.1-neo
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,5 +22,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: bbsf-neoforge-1.21.1
+          name: bbsf-forge-1.20.1
           path: build/libs/*.jar

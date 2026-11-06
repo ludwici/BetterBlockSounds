@@ -1,17 +1,16 @@
 package com.ludwici.bbsf.client;
 
-import com.ludwici.bbsf.BetterBlockSoundsFork;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 
-@Mod(value = BetterBlockSoundsFork.MODID, dist = Dist.CLIENT)
 public final class BetterBlockSoundsClient {
-    public BetterBlockSoundsClient(ModContainer container) {
+    private BetterBlockSoundsClient() {
+    }
+
+    public static void register() {
         if (ModList.get().isLoaded("yet_another_config_lib_v3")) {
-            container.registerExtensionPoint(IConfigScreenFactory.class, (ignored, parent) -> SoundConfigScreen.create(parent));
+            ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, parent) -> SoundConfigScreen.create(parent)));
         }
     }
 }
