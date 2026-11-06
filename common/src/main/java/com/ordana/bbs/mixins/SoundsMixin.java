@@ -1,6 +1,6 @@
 package com.ordana.bbs.mixins;
 
-import com.ordana.bbs.ModSoundTypes;
+import com.ludwici.bbsf.config.SoundConfigManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +16,6 @@ public abstract class SoundsMixin {
 
     @Inject(method = "getSoundType", at = @At("TAIL"), cancellable = true)
     private void getSoundGroupMixin(CallbackInfoReturnable<SoundType> cir){
-        cir.setReturnValue(ModSoundTypes.assignSounds(this.asBlock(), cir));
+        cir.setReturnValue(SoundConfigManager.resolve(this.asBlock(), cir.getReturnValue()));
     }
 }

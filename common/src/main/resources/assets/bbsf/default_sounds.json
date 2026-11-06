@@ -1,0 +1,1120 @@
+{
+  "sound_types": {
+    "stone_ore": {
+      "volume": 1,
+      "pitch": 0.9,
+      "break": "minecraft:block.nether_ore.break",
+      "step": "minecraft:block.nether_ore.step",
+      "place": "minecraft:block.nether_ore.place",
+      "hit": "minecraft:block.nether_ore.hit",
+      "fall": "minecraft:block.nether_ore.fall"
+    },
+    "obsidian": {
+      "volume": 1,
+      "pitch": 0.7,
+      "break": "minecraft:block.deepslate.break",
+      "step": "minecraft:block.deepslate.step",
+      "place": "minecraft:block.deepslate.place",
+      "hit": "minecraft:block.deepslate.hit",
+      "fall": "minecraft:block.deepslate.fall"
+    },
+    "blackstone": {
+      "volume": 1,
+      "pitch": 0.9,
+      "break": "minecraft:block.deepslate.break",
+      "step": "minecraft:block.deepslate.step",
+      "place": "minecraft:block.deepslate.place",
+      "hit": "minecraft:block.deepslate.hit",
+      "fall": "minecraft:block.deepslate.fall"
+    },
+    "polished_blackstone": {
+      "volume": 1,
+      "pitch": 0.9,
+      "break": "minecraft:block.polished_deepslate.break",
+      "step": "minecraft:block.polished_deepslate.step",
+      "place": "minecraft:block.polished_deepslate.place",
+      "hit": "minecraft:block.polished_deepslate.hit",
+      "fall": "minecraft:block.polished_deepslate.fall"
+    },
+    "polished_blackstone_bricks": {
+      "volume": 1,
+      "pitch": 0.9,
+      "break": "minecraft:block.deepslate_bricks.break",
+      "step": "minecraft:block.deepslate_bricks.step",
+      "place": "minecraft:block.deepslate_bricks.place",
+      "hit": "minecraft:block.deepslate_bricks.hit",
+      "fall": "minecraft:block.deepslate_bricks.fall"
+    },
+    "end_stone_bricks": {
+      "volume": 1,
+      "pitch": 0.8,
+      "break": "minecraft:block.deepslate_tiles.break",
+      "step": "minecraft:block.deepslate_tiles.step",
+      "place": "minecraft:block.deepslate_tiles.place",
+      "hit": "minecraft:block.deepslate_tiles.hit",
+      "fall": "minecraft:block.deepslate_tiles.fall"
+    },
+    "quartz": {
+      "volume": 1,
+      "pitch": 0.9,
+      "break": "minecraft:block.calcite.break",
+      "step": "minecraft:block.calcite.step",
+      "place": "minecraft:block.calcite.place",
+      "hit": "minecraft:block.calcite.hit",
+      "fall": "minecraft:block.calcite.fall"
+    },
+    "quartz_bricks": {
+      "volume": 1,
+      "pitch": 1.1,
+      "break": "minecraft:block.calcite.break",
+      "step": "minecraft:block.calcite.step",
+      "place": "minecraft:block.calcite.place",
+      "hit": "minecraft:block.calcite.hit",
+      "fall": "minecraft:block.calcite.fall"
+    },
+    "grass_block": {
+      "volume": 1,
+      "pitch": 1,
+      "break": "minecraft:block.rooted_dirt.break",
+      "step": "minecraft:block.grass.step",
+      "place": "minecraft:block.rooted_dirt.break",
+      "hit": "minecraft:block.rooted_dirt.break",
+      "fall": "minecraft:block.grass.fall"
+    },
+    "terracotta": {
+      "volume": 1,
+      "pitch": 0.6,
+      "break": "minecraft:block.calcite.break",
+      "step": "minecraft:block.calcite.step",
+      "place": "minecraft:block.calcite.place",
+      "hit": "minecraft:block.calcite.hit",
+      "fall": "minecraft:block.calcite.fall"
+    },
+    "stone_brick": {
+      "volume": 1,
+      "pitch": 0.6,
+      "break": "minecraft:block.deepslate_tiles.break",
+      "step": "minecraft:block.deepslate_tiles.step",
+      "place": "minecraft:block.deepslate_tiles.place",
+      "hit": "minecraft:block.deepslate_tiles.hit",
+      "fall": "minecraft:block.deepslate_tiles.fall"
+    },
+    "clay_brick": {
+      "volume": 1,
+      "pitch": 1.3,
+      "break": "minecraft:block.nether_bricks.break",
+      "step": "minecraft:block.nether_bricks.step",
+      "place": "minecraft:block.nether_bricks.place",
+      "hit": "minecraft:block.nether_bricks.hit",
+      "fall": "minecraft:block.nether_bricks.fall"
+    },
+    "metal": {
+      "volume": 1,
+      "pitch": 0.6,
+      "break": "minecraft:block.copper.break",
+      "step": "minecraft:block.copper.step",
+      "place": "minecraft:block.copper.place",
+      "hit": "minecraft:block.copper.hit",
+      "fall": "minecraft:block.copper.fall"
+    },
+    "lily_pad": {
+      "volume": 1,
+      "pitch": 1,
+      "break": "minecraft:block.big_dripleaf.break",
+      "step": "minecraft:block.big_dripleaf.step",
+      "place": "minecraft:block.lily_pad.place",
+      "hit": "minecraft:block.big_dripleaf.hit",
+      "fall": "minecraft:block.big_dripleaf.fall"
+    },
+    "small_object": {
+      "volume": 1,
+      "pitch": 0.8,
+      "break": "minecraft:block.candle.break",
+      "step": "minecraft:block.candle.step",
+      "place": "minecraft:block.candle.place",
+      "hit": "minecraft:block.candle.hit",
+      "fall": "minecraft:block.candle.fall"
+    },
+    "bell": {
+      "volume": 1,
+      "pitch": 1,
+      "break": "minecraft:block.bell.use",
+      "step": "minecraft:block.metal.step",
+      "place": "minecraft:block.bell.use",
+      "hit": "minecraft:block.copper.hit",
+      "fall": "minecraft:block.bell.resonate"
+    },
+    "vanilla_nether_gold_ore": {
+      "vanilla": "NETHER_GOLD_ORE"
+    },
+    "vanilla_azalea_leaves": {
+      "vanilla": "AZALEA_LEAVES"
+    },
+    "vanilla_cherry_sapling": {
+      "vanilla": "CHERRY_SAPLING"
+    },
+    "vanilla_bone_block": {
+      "vanilla": "BONE_BLOCK"
+    },
+    "vanilla_wet_grass": {
+      "vanilla": "WET_GRASS"
+    },
+    "vanilla_shroomlight": {
+      "vanilla": "SHROOMLIGHT"
+    },
+    "vanilla_netherrack": {
+      "vanilla": "NETHERRACK"
+    },
+    "vanilla_basalt": {
+      "vanilla": "BASALT"
+    },
+    "vanilla_tuff": {
+      "vanilla": "TUFF"
+    },
+    "vanilla_hanging_roots": {
+      "vanilla": "HANGING_ROOTS"
+    },
+    "vanilla_vine": {
+      "vanilla": "VINE"
+    },
+    "vanilla_netherite_block": {
+      "vanilla": "NETHERITE_BLOCK"
+    },
+    "vanilla_amethyst": {
+      "vanilla": "AMETHYST"
+    },
+    "vanilla_coral_block": {
+      "vanilla": "CORAL_BLOCK"
+    },
+    "vanilla_rooted_dirt": {
+      "vanilla": "ROOTED_DIRT"
+    },
+    "vanilla_wart_block": {
+      "vanilla": "WART_BLOCK"
+    },
+    "vanilla_stem": {
+      "vanilla": "STEM"
+    },
+    "vanilla_crop": {
+      "vanilla": "CROP"
+    }
+  },
+  "rules": [
+    {
+      "target": "#minecraft:small_flowers",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "#bbs:stone_ores",
+      "sound_type": "stone_ore"
+    },
+    {
+      "target": "minecraft:coal_ore",
+      "sound_type": "stone_ore"
+    },
+    {
+      "target": "minecraft:copper_ore",
+      "sound_type": "stone_ore"
+    },
+    {
+      "target": "minecraft:iron_ore",
+      "sound_type": "stone_ore"
+    },
+    {
+      "target": "minecraft:gold_ore",
+      "sound_type": "stone_ore"
+    },
+    {
+      "target": "minecraft:emerald_ore",
+      "sound_type": "stone_ore"
+    },
+    {
+      "target": "minecraft:diamond_ore",
+      "sound_type": "stone_ore"
+    },
+    {
+      "target": "minecraft:redstone_ore",
+      "sound_type": "stone_ore"
+    },
+    {
+      "target": "minecraft:raw_copper_block",
+      "sound_type": "vanilla_nether_gold_ore"
+    },
+    {
+      "target": "minecraft:raw_iron_block",
+      "sound_type": "vanilla_nether_gold_ore"
+    },
+    {
+      "target": "minecraft:raw_gold_block",
+      "sound_type": "vanilla_nether_gold_ore"
+    },
+    {
+      "target": "minecraft:coal_block",
+      "sound_type": "vanilla_nether_gold_ore"
+    },
+    {
+      "target": "minecraft:oak_leaves",
+      "sound_type": "vanilla_azalea_leaves"
+    },
+    {
+      "target": "minecraft:birch_leaves",
+      "sound_type": "vanilla_azalea_leaves"
+    },
+    {
+      "target": "minecraft:spruce_leaves",
+      "sound_type": "vanilla_azalea_leaves"
+    },
+    {
+      "target": "minecraft:jungle_leaves",
+      "sound_type": "vanilla_azalea_leaves"
+    },
+    {
+      "target": "minecraft:acacia_leaves",
+      "sound_type": "vanilla_azalea_leaves"
+    },
+    {
+      "target": "minecraft:dark_oak_leaves",
+      "sound_type": "vanilla_azalea_leaves"
+    },
+    {
+      "target": "minecraft:mangrove_leaves",
+      "sound_type": "vanilla_azalea_leaves"
+    },
+    {
+      "target": "minecraft:oak_sapling",
+      "sound_type": "vanilla_cherry_sapling"
+    },
+    {
+      "target": "minecraft:birch_sapling",
+      "sound_type": "vanilla_cherry_sapling"
+    },
+    {
+      "target": "minecraft:spruce_sapling",
+      "sound_type": "vanilla_cherry_sapling"
+    },
+    {
+      "target": "minecraft:jungle_sapling",
+      "sound_type": "vanilla_cherry_sapling"
+    },
+    {
+      "target": "minecraft:acacia_sapling",
+      "sound_type": "vanilla_cherry_sapling"
+    },
+    {
+      "target": "minecraft:dark_oak_sapling",
+      "sound_type": "vanilla_cherry_sapling"
+    },
+    {
+      "target": "minecraft:mangrove_propagule",
+      "sound_type": "vanilla_cherry_sapling"
+    },
+    {
+      "target": "minecraft:dead_bush",
+      "sound_type": "vanilla_cherry_sapling"
+    },
+    {
+      "target": "minecraft:lily_pad",
+      "sound_type": "lily_pad"
+    },
+    {
+      "target": "minecraft:bell",
+      "sound_type": "bell"
+    },
+    {
+      "target": "minecraft:skeleton_skull",
+      "sound_type": "vanilla_bone_block"
+    },
+    {
+      "target": "minecraft:wither_skeleton_skull",
+      "sound_type": "vanilla_bone_block"
+    },
+    {
+      "target": "minecraft:sponge",
+      "sound_type": "vanilla_wet_grass"
+    },
+    {
+      "target": "minecraft:wet_sponge",
+      "sound_type": "vanilla_wet_grass"
+    },
+    {
+      "target": "minecraft:end_rod",
+      "sound_type": "vanilla_shroomlight"
+    },
+    {
+      "target": "minecraft:magma_block",
+      "sound_type": "vanilla_netherrack"
+    },
+    {
+      "target": "minecraft:blackstone",
+      "sound_type": "blackstone"
+    },
+    {
+      "target": "minecraft:blackstone_stairs",
+      "sound_type": "blackstone"
+    },
+    {
+      "target": "minecraft:blackstone_slab",
+      "sound_type": "blackstone"
+    },
+    {
+      "target": "minecraft:blackstone_wall",
+      "sound_type": "blackstone"
+    },
+    {
+      "target": "minecraft:polished_blackstone",
+      "sound_type": "polished_blackstone"
+    },
+    {
+      "target": "minecraft:polished_blackstone_stairs",
+      "sound_type": "polished_blackstone"
+    },
+    {
+      "target": "minecraft:polished_blackstone_slab",
+      "sound_type": "polished_blackstone"
+    },
+    {
+      "target": "minecraft:polished_blackstone_wall",
+      "sound_type": "polished_blackstone"
+    },
+    {
+      "target": "minecraft:polished_blackstone_button",
+      "sound_type": "polished_blackstone"
+    },
+    {
+      "target": "minecraft:polished_blackstone_pressure_plate",
+      "sound_type": "polished_blackstone"
+    },
+    {
+      "target": "minecraft:polished_blackstone_bricks",
+      "sound_type": "polished_blackstone_bricks"
+    },
+    {
+      "target": "minecraft:polished_blackstone_brick_stairs",
+      "sound_type": "polished_blackstone_bricks"
+    },
+    {
+      "target": "minecraft:polished_blackstone_brick_slab",
+      "sound_type": "polished_blackstone_bricks"
+    },
+    {
+      "target": "minecraft:polished_blackstone_brick_wall",
+      "sound_type": "polished_blackstone_bricks"
+    },
+    {
+      "target": "minecraft:chiseled_polished_blackstone",
+      "sound_type": "polished_blackstone_bricks"
+    },
+    {
+      "target": "minecraft:end_stone",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:end_portal_frame",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:andesite",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:andesite_wall",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:andesite_slab",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:andesite_stairs",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:diorite",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:diorite_wall",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:diorite_stairs",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:diorite_slab",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:granite",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:granite_wall",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:granite_slab",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:granite_stairs",
+      "sound_type": "vanilla_basalt"
+    },
+    {
+      "target": "minecraft:sandstone",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:chiseled_sandstone",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:cut_sandstone",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:smooth_sandstone",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:sandstone_stairs",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:smooth_sandstone_stairs",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:sandstone_slab",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:cut_sandstone_slab",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:smooth_sandstone_slab",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:sandstone_wall",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:red_sandstone",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:red_chiseled_sandstone",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:cut_red_sandstone",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:smooth_red_sandstone",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:red_sandstone_stairs",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:smooth_red_sandstone_stairs",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:red_sandstone_slab",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:cut_red_sandstone_slab",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:smooth_red_sandstone_slab",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:red_sandstone_wall",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:turtle_egg",
+      "sound_type": "vanilla_tuff"
+    },
+    {
+      "target": "minecraft:end_stone_bricks",
+      "sound_type": "end_stone_bricks"
+    },
+    {
+      "target": "minecraft:end_stone_brick_stairs",
+      "sound_type": "end_stone_bricks"
+    },
+    {
+      "target": "minecraft:end_stone_brick_slab",
+      "sound_type": "end_stone_bricks"
+    },
+    {
+      "target": "minecraft:end_stone_brick_wall",
+      "sound_type": "end_stone_bricks"
+    },
+    {
+      "target": "minecraft:obsidian",
+      "sound_type": "obsidian"
+    },
+    {
+      "target": "minecraft:crying_obsidian",
+      "sound_type": "obsidian"
+    },
+    {
+      "target": "minecraft:respawn_anchor",
+      "sound_type": "obsidian"
+    },
+    {
+      "target": "minecraft:ender_chest",
+      "sound_type": "obsidian"
+    },
+    {
+      "target": "minecraft:bedrock",
+      "sound_type": "obsidian"
+    },
+    {
+      "target": "minecraft:enchanting_table",
+      "sound_type": "obsidian"
+    },
+    {
+      "target": "minecraft:beacon",
+      "sound_type": "obsidian"
+    },
+    {
+      "target": "minecraft:smooth_quartz_block",
+      "sound_type": "quartz"
+    },
+    {
+      "target": "minecraft:smooth_quartz_slab",
+      "sound_type": "quartz"
+    },
+    {
+      "target": "minecraft:smooth_quartz_stairs",
+      "sound_type": "quartz"
+    },
+    {
+      "target": "minecraft:quartz_block",
+      "sound_type": "quartz"
+    },
+    {
+      "target": "minecraft:quartz_slab",
+      "sound_type": "quartz"
+    },
+    {
+      "target": "minecraft:quartz_stairs",
+      "sound_type": "quartz"
+    },
+    {
+      "target": "minecraft:prismarine",
+      "sound_type": "quartz"
+    },
+    {
+      "target": "minecraft:prismarine_slab",
+      "sound_type": "quartz"
+    },
+    {
+      "target": "minecraft:prismarine_stairs",
+      "sound_type": "quartz"
+    },
+    {
+      "target": "minecraft:prismarine_wall",
+      "sound_type": "quartz"
+    },
+    {
+      "target": "minecraft:chiseled_quartz_block",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:quartz_pillar",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:quartz_bricks",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:prismarine_bricks",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:prismarine_brick_slab",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:prismarine_brick_stairs",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:dark_prismarine",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:dark_prismarine_slab",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:dark_prismarine_stairs",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:purpur_block",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:purpur_slab",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:purpur_stairs",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:purpur_pillar",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:sea_lantern",
+      "sound_type": "quartz_bricks"
+    },
+    {
+      "target": "minecraft:grass_block",
+      "sound_type": "grass_block"
+    },
+    {
+      "target": "minecraft:podzol",
+      "sound_type": "grass_block"
+    },
+    {
+      "target": "minecraft:mycelium",
+      "sound_type": "grass_block"
+    },
+    {
+      "target": "minecraft:dirt_path",
+      "sound_type": "grass_block"
+    },
+    {
+      "target": "minecraft:grass",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:tall_grass",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:fern",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:large_fern",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:dandelion",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:poppy",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:blue_orchid",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:allium",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:azure_bluet",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:red_tulip",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:orange_tulip",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:white_tulip",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:pink_tulip",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:oxeye_daisy",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:cornflower",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:lily_of_the_valley",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:wither_rose",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:brown_mushroom",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:red_mushroom",
+      "sound_type": "vanilla_hanging_roots"
+    },
+    {
+      "target": "minecraft:cobweb",
+      "sound_type": "vanilla_vine"
+    },
+    {
+      "target": "minecraft:glow_lichen",
+      "sound_type": "vanilla_vine"
+    },
+    {
+      "target": "minecraft:white_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:orange_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:magenta_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:light_blue_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:yellow_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:lime_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:pink_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:gray_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:light_gray_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:cyan_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:purple_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:blue_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:brown_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:green_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:red_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:black_terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:terracotta",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:conduit",
+      "sound_type": "terracotta"
+    },
+    {
+      "target": "minecraft:stone_brick_slab",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:infested_stone_bricks",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:infested_mossy_stone_bricks",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:infested_cracked_stone_bricks",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:infested_chiseled_stone_bricks",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:stone_bricks",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:mossy_stone_bricks",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:cracked_stone_bricks",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:chiseled_stone_bricks",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:stone_brick_stairs",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:mossy_stone_brick_wall",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:stone_brick_wall",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:mossy_stone_brick_stairs",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:mossy_stone_brick_slab",
+      "sound_type": "stone_brick"
+    },
+    {
+      "target": "minecraft:brick_slab",
+      "sound_type": "clay_brick"
+    },
+    {
+      "target": "minecraft:bricks",
+      "sound_type": "clay_brick"
+    },
+    {
+      "target": "minecraft:brick_stairs",
+      "sound_type": "clay_brick"
+    },
+    {
+      "target": "minecraft:brick_wall",
+      "sound_type": "clay_brick"
+    },
+    {
+      "target": "minecraft:gold_block",
+      "sound_type": "vanilla_netherite_block"
+    },
+    {
+      "target": "minecraft:diamond_block",
+      "sound_type": "vanilla_netherite_block"
+    },
+    {
+      "target": "minecraft:iron_bars",
+      "sound_type": "vanilla_netherite_block"
+    },
+    {
+      "target": "minecraft:iron_door",
+      "sound_type": "vanilla_netherite_block"
+    },
+    {
+      "target": "minecraft:iron_block",
+      "sound_type": "vanilla_netherite_block"
+    },
+    {
+      "target": "minecraft:observer",
+      "sound_type": "vanilla_netherite_block"
+    },
+    {
+      "target": "minecraft:dropper",
+      "sound_type": "vanilla_netherite_block"
+    },
+    {
+      "target": "minecraft:dispenser",
+      "sound_type": "vanilla_netherite_block"
+    },
+    {
+      "target": "minecraft:emerald_block",
+      "sound_type": "vanilla_amethyst"
+    },
+    {
+      "target": "minecraft:dead_brain_coral",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_horn_coral",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_fire_coral",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_tube_coral",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_bubble_coral",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_brain_coral_fan",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_horn_coral_fan",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_fire_coral_fan",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_tube_coral_fan",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_bubble_coral_fan",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_brain_coral_block",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_horn_coral_block",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_fire_coral_block",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_tube_coral_block",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:dead_bubble_coral_block",
+      "sound_type": "vanilla_coral_block"
+    },
+    {
+      "target": "minecraft:gravel",
+      "sound_type": "vanilla_rooted_dirt"
+    },
+    {
+      "target": "minecraft:dirt",
+      "sound_type": "vanilla_rooted_dirt"
+    },
+    {
+      "target": "minecraft:coarse_dirt",
+      "sound_type": "vanilla_rooted_dirt"
+    },
+    {
+      "target": "minecraft:rooted_dirt",
+      "sound_type": "vanilla_wart_block"
+    },
+    {
+      "target": "minecraft:red_mushroom_block",
+      "sound_type": "vanilla_wart_block"
+    },
+    {
+      "target": "minecraft:brown_mushroom_block",
+      "sound_type": "vanilla_wart_block"
+    },
+    {
+      "target": "minecraft:mushroom_stem",
+      "sound_type": "vanilla_wart_block"
+    },
+    {
+      "target": "minecraft:chorus_plant",
+      "sound_type": "vanilla_stem"
+    },
+    {
+      "target": "minecraft:chorus_flower",
+      "sound_type": "vanilla_stem"
+    },
+    {
+      "target": "minecraft:rose_bush",
+      "sound_type": "vanilla_crop"
+    },
+    {
+      "target": "minecraft:peony",
+      "sound_type": "vanilla_crop"
+    },
+    {
+      "target": "minecraft:lilac",
+      "sound_type": "vanilla_crop"
+    },
+    {
+      "target": "minecraft:sunflower",
+      "sound_type": "vanilla_crop"
+    },
+    {
+      "target": "minecraft:cactus",
+      "sound_type": "vanilla_crop"
+    },
+    {
+      "target": "minecraft:sugar_cane",
+      "sound_type": "vanilla_crop"
+    },
+    {
+      "target": "minecraft:torchflower",
+      "sound_type": "vanilla_crop"
+    },
+    {
+      "target": "minecraft:flower_pot",
+      "sound_type": "small_object"
+    },
+    {
+      "target": "minecraft:torch",
+      "sound_type": "small_object"
+    },
+    {
+      "target": "minecraft:soul_torch",
+      "sound_type": "small_object"
+    },
+    {
+      "target": "minecraft:redstone_torch",
+      "sound_type": "small_object"
+    },
+    {
+      "target": "minecraft:wall_torch",
+      "sound_type": "small_object"
+    },
+    {
+      "target": "minecraft:soul_wall_torch",
+      "sound_type": "small_object"
+    },
+    {
+      "target": "minecraft:redstone_wall_torch",
+      "sound_type": "small_object"
+    }
+  ]
+}

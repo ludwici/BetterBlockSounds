@@ -2,23 +2,34 @@
   "schemaVersion": 1,
   "id": "bbs",
   "version": "${version}",
-  "name": "Better Block Sounds",
-  "description": "Block sounds, but better!",
+  "name": "Better Block Sounds Fork",
+  "description": "Block sounds, but better! (forked version)",
   "authors": [
-    "Ordana"
+    "ludwici"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/better-block-sounds",
-    "sources": "https://github.com/AstralOrdana/BetterBlockSounds"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/better-block-sounds-fork",
+    "sources": "https://github.com/ludwici/BetterBlockSounds"
   },
   "license": "LGPLv3",
   "icon": "icon.png",
   "environment": "*",
-  "entrypoints": {},
+  "entrypoints": {
+    "main": [
+      "com.ludwici.bbsf.client.BetterBlockSoundsFabric"
+    ],
+    "modmenu": [
+      "com.ludwici.bbsf.client.ModMenuIntegration"
+    ]
+  },
   "mixins": [
     "bbs.mixins.json"
   ],
   "depends": {
     "minecraft": ">=1.20"
+  },
+  "suggests": {
+    "yet_another_config_lib_v3": ">=3.6.6",
+    "modmenu": "*"
   }
 }
