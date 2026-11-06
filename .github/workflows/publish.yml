@@ -116,7 +116,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 1
       matrix: ${{ fromJson(needs.claim.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
@@ -127,59 +127,8 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
       - uses: gradle/actions/setup-gradle@v4
-      - name: Build release jar
-        run: bash ./gradlew clean build --no-daemon
-      - name: Validate metadata and select runtime jar
-        id: metadata
+      - name: Publish release with Gradle publishMods
         env:
-          TARGET_BRANCH: ${{ matrix.branch }}
-          TARGET_LOADER: ${{ matrix.loader }}
-        run: |
-          python3 - <<'PY'
-          import os
-          import shutil
-          from pathlib import Path
-
-          changelog = Path("CHANGELOG.md")
-          if not changelog.is_file() or "RELEASE_NOTES_REQUIRED" in changelog.read_text(encoding="utf-8"):
-              raise RuntimeError("Fill in CHANGELOG.md and remove RELEASE_NOTES_REQUIRED before requesting a release.")
-          props = {}
-          for line in Path("gradle.properties").read_text(encoding="utf-8").splitlines():
-              if "=" in line and not line.strip().startswith("#"):
-                  key, value = line.split("=", 1)
-                  props[key.strip()] = value.strip()
-          version = props["mod_version"]
-          game_version = props["minecraft_version"]
-          branch = os.environ["TARGET_BRANCH"]
-          loader = os.environ["TARGET_LOADER"]
-          if game_version != branch.split("-")[0]:
-              raise RuntimeError("Requested branch does not match Minecraft version in gradle.properties.")
-          jars = [p for p in Path("build/libs").glob("*.jar")
-                  if not any(p.stem.endswith("-" + suffix) for suffix in ("sources", "javadoc", "dev", "shadow"))]
-          if len(jars) != 1:
-              raise RuntimeError(f"Expected one runtime jar, found: {[str(p) for p in jars]}")
-          destination = Path("dist")
-          destination.mkdir(exist_ok=True)
-          shutil.copy2(jars[0], destination / f"bbsf-{loader}-{game_version}-{version}.jar")
-          supported = ["26.1", "26.1.1", "26.1.2"] if game_version == "26.1.2" else [game_version]
-          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
-              output.write(f"version={version}+{game_version}-{loader}\n")
-              output.write(f"title=Better Block Sounds Fork {version} - Minecraft {game_version} ({loader})\n")
-              output.write("game_versions<<END_VERSIONS\n" + "\n".join(supported) + "\nEND_VERSIONS\n")
-          PY
-      - name: Publish to CurseForge and Modrinth
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          curseforge-id: '1232054'
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          modrinth-id: 'ZnMA9t3T'
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          files: dist/*.jar
-          name: ${{ steps.metadata.outputs.title }}
-          version: ${{ steps.metadata.outputs.version }}
-          version-type: ${{ matrix.release_type }}
-          changelog-file: CHANGELOG.md
-          loaders: ${{ matrix.loader }}
-          game-versions: ${{ steps.metadata.outputs.game_versions }}
-          java: ${{ matrix.java }}
-          dependencies: ${{ matrix.loader == 'fabric' && 'fabric-api(required)' || '' }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: bash ./gradlew clean build publishMods --no-daemon
