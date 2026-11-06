@@ -1,0 +1,20 @@
+{
+  "config.bbsf.title": "Better Block Sounds Fork",
+  "config.bbsf.rules": "Правила блоков",
+  "config.bbsf.rules.description": "Правила применяются по порядку. Последнее подходящее правило имеет приоритет.",
+  "config.bbsf.rule_list": "Блоки и теги",
+  "config.bbsf.rule_list.description": "Формат: #namespace:tag=sound_type или namespace:block=sound_type. Можно добавлять, удалять и менять порядок правил.",
+  "config.bbsf.volume": "Громкость",
+  "config.bbsf.pitch": "Высота звука",
+  "config.bbsf.break": "Звук разрушения",
+  "config.bbsf.step": "Звук шага",
+  "config.bbsf.place": "Звук установки",
+  "config.bbsf.hit": "Звук удара",
+  "config.bbsf.fall": "Звук падения",
+  "message.bbsf.reloaded": "Better Block Sounds Fork: настройки звуков перечитаны.",
+  "config.bbsf.manage_types": "Управление типами звуков",
+  "config.bbsf.type_list": "Идентификаторы типов звуков",
+  "config.bbsf.type_list.description": "Добавляйте, переименовывайте или удаляйте типы. Новый тип копирует stone_ore; после сохранения откройте редактор снова, чтобы настроить события. Обновите правила, ссылающиеся на удалённые типы.",
+  "config.bbsf.vanilla_types": "Ванильные типы звуков",
+  "config.bbsf.custom_types": "Кастомные типы звуков"
+}
