@@ -9,7 +9,8 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/better-block-sounds-fork",
-    "sources": "https://github.com/ludwici/BetterBlockSounds"
+    "sources": "https://github.com/ludwici/BetterBlockSounds",
+    "issues": "https://github.com/ludwici/BetterBlockSounds/issues"
   },
   "license": "LGPLv3",
   "icon": "assets/bbsf/logo.png",
@@ -35,7 +36,7 @@
     "fabric-api": "*"
   },
   "suggests": {
-    "yet_another_config_lib_v3": ">=3.6.6",
+    "yet_another_config_lib_v3": ">=3.8.2",
     "modmenu": "*"
   }
 }

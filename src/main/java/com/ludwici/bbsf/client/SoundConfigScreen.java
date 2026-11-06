@@ -41,23 +41,31 @@ public final class SoundConfigScreen {
                         .build())
                 .build();
 
+        Map<String, List<BlockPreviewCategory.BlockEntry>> previews = BlockPreviewCategory.collect(data);
+        ListOption<String> types = ListOption.<String>createBuilder()
+                .name(Component.translatable("config.bbsf.type_list"))
+                .description(OptionDescription.of(Component.translatable("config.bbsf.type_list.description")))
+                .binding(new ArrayList<>(defaults.soundTypes.keySet()), () -> typeEditor.names, value -> typeEditor.names = new ArrayList<>(value))
+                .customController(entry -> {
+                    SoundTypeRowController controller = new SoundTypeRowController(entry, previews);
+                    typeEditor.controllers.add(controller);
+                    return controller;
+                })
+                .initial("custom_sound")
+                .build();
+
+        ConfigCategory.Builder manageTypes = ConfigCategory.createBuilder()
+                .name(Component.translatable("config.bbsf.manage_types"))
+                .tooltip(Component.translatable("config.bbsf.block_preview.tooltip"))
+                .group(types);
+
         YetAnotherConfigLib.Builder builder = YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("config.bbsf.title"))
                 .category(rules)
-                .category(BlockPreviewCategory.create(data))
-                .category(ConfigCategory.createBuilder()
-                        .name(Component.translatable("config.bbsf.manage_types"))
-                        .group(ListOption.<String>createBuilder()
-                                .name(Component.translatable("config.bbsf.type_list"))
-                                .description(OptionDescription.of(Component.translatable("config.bbsf.type_list.description")))
-                                .binding(new ArrayList<>(defaults.soundTypes.keySet()), () -> typeEditor.names, value -> typeEditor.names = new ArrayList<>(value))
-                                .controller(StringControllerBuilder::create)
-                                .initial("custom_sound")
-                                .build())
-                        .build())
+                .category(manageTypes.build())
                 .save(() -> {
                     data.rules = parseLines(ruleEditor.lines);
-                    data.soundTypes = collectTypes(data.soundTypes, typeEditor.names);
+                    data.soundTypes = collectTypes(data.soundTypes, typeEditor.names, typeEditor.controllers, data.rules);
                     SoundConfigManager.save(data);
                 });
 
@@ -147,27 +155,50 @@ public final class SoundConfigScreen {
         return rules;
     }
 
-    private static Map<String, SoundConfigData.SoundDefinition> collectTypes(Map<String, SoundConfigData.SoundDefinition> current, List<String> names) {
+    private static Map<String, SoundConfigData.SoundDefinition> collectTypes(Map<String, SoundConfigData.SoundDefinition> current, List<String> names, List<SoundTypeRowController> controllers, List<SoundConfigData.SoundRule> rules) {
         Map<String, SoundConfigData.SoundDefinition> next = new java.util.LinkedHashMap<>();
+        Map<String, String> originals = new java.util.HashMap<>();
+        Map<String, String> renamed = new java.util.HashMap<>();
         SoundConfigData.SoundDefinition template = current.get("stone_ore");
 
         if (template == null && !current.isEmpty()) {
             template = current.values().iterator().next();
         }
 
+        for (SoundTypeRowController controller : controllers) {
+            originals.put(controller.option().pendingValue().trim(), controller.originalId());
+        }
+
         for (String raw : names) {
             String id = raw.trim();
 
-            if (!id.isEmpty() && !next.containsKey(id)) {
-                SoundConfigData.SoundDefinition definition = current.get(id);
+            if (id.isEmpty() || next.containsKey(id)) {
+                continue;
+            }
 
-                if (definition == null && template != null) {
-                    definition = copyDefinition(template);
-                }
+            String originalId = originals.get(id);
+            SoundConfigData.SoundDefinition definition = originalId == null ? current.get(id) : current.get(originalId);
 
-                if (definition != null) {
-                    next.put(id, definition);
+            if (definition == null) {
+                definition = current.get(id);
+            }
+
+            if (definition == null && template != null) {
+                definition = copyDefinition(template);
+            }
+
+            if (definition != null) {
+                next.put(id, definition);
+
+                if (originalId != null && current.containsKey(originalId) && !originalId.equals(id)) {
+                    renamed.put(originalId, id);
                 }
+            }
+        }
+
+        for (SoundConfigData.SoundRule rule : rules) {
+            if (rule != null && rule.soundType != null) {
+                rule.soundType = renamed.getOrDefault(rule.soundType, rule.soundType);
             }
         }
 
@@ -188,6 +219,7 @@ public final class SoundConfigScreen {
 
     private static final class TypeEditor {
         private List<String> names;
+        private final List<SoundTypeRowController> controllers = new ArrayList<>();
 
         private TypeEditor(List<String> names) {
             this.names = names;
