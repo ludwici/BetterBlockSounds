@@ -38,21 +38,24 @@ Publication requires adding a JSON request to `.github/release-requests/pending/
 {
   "authorization": "PUBLISH_APPROVED",
   "branch": "26.3-fabric",
+  "commit_sha": "REPLACE_WITH_ACTUAL_40_CHARACTER_COMMIT_SHA",
   "publish_at_utc": "2026-11-07T19:45:00Z",
   "release_type": "release"
 }
 ```
 
+Set `commit_sha` to the exact 40-character Git commit of the selected version branch at the moment publication is authorized. It ensures that later code changes do not silently alter a scheduled release. The SHA in this example is intentionally a placeholder and cannot be used as-is.
+
 Choose a unique filename, e.g. `2026-11-07-26.3-fabric.json`. Valid `release_type` values are `release`, `beta`, and `alpha`. Create one request per branch; requests for different branches can run together.
 
 A request with a due time in the past is picked up by the push-triggered workflow. A future request is picked up by the scheduler, checking at minutes **07, 22, 37, and 52 UTC** of each hour. Convert local dates/times to **UTC** when adding requests. For example, Kyiv time varies between UTC+2 and UTC+3 depending on daylight saving time.
 
-Before any upload, the workflow checks that both secrets exist and moves due requests to `.github/release-requests/claimed/` in a dedicated commit. Claimed requests are never published again automatically. If the build or a platform upload fails, inspect both platform projects before explicitly authorizing a new request; the upload may have partially succeeded.
+Before any upload, the workflow checks that both secrets exist, verifies the pinned commit and its finalized Markdown changelog, and moves due requests to `.github/release-requests/claimed/` in a dedicated commit. Claimed requests are never published again automatically. If the build or a platform upload fails, inspect both platform projects before explicitly authorizing a new request; the upload may have partially succeeded.
 
 GitHub scheduled runs are best effort and can start later than the requested time. Do not rely on minute-exact publication. For a stricter launch time, trigger a manually approved request close to the intended time.
 
 ## How to request releases through ChatGPT
 
-Ask: *Publish BBSF 2.0.0 for 26.3 Fabric and NeoForge now.* Or: *Schedule BBSF for 1.21.1 and 26.2 for Saturday at 21:30 Kyiv time.* ChatGPT should first verify the branches, final Markdown changelog, and secret readiness, and **only after that explicit instruction** add the corresponding approved request files. Writing a request file starts publication when due; never create one while merely discussing plans.
+Ask: *Publish BBSF 2.0.0 for 26.3 Fabric and NeoForge now.* Or: *Schedule BBSF for 1.21.1 and 26.2 for Saturday at 21:30 Kyiv time.* ChatGPT should first verify the branches, final Markdown changelog, and secret readiness, and **only after that explicit instruction** capture each branch's current commit SHA and add the corresponding approved request files. Writing a request file starts publication when due; never create one while merely discussing plans.
 
 Publishing uses `Kir-Antipov/mc-publish@v3.3` and derives the runtime JAR and version from each branch. The existing CI build workflows remain independent.
