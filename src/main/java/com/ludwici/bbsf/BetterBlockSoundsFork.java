@@ -1,20 +1,15 @@
 package com.ludwici.bbsf;
 
+import com.ludwici.bbsf.config.SoundConfigManager;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.fml.common.Mod;
 
 @Mod(BetterBlockSoundsFork.MODID)
 public class BetterBlockSoundsFork {
     public static final String MODID = "bbsf";
 
-    public BetterBlockSoundsFork(IEventBus modEventBus, ModContainer modContainer) {
-
-    }
-
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
+    public BetterBlockSoundsFork(IEventBus modEventBus, ModContainer container) {
+        SoundConfigManager.load();
     }
 }
