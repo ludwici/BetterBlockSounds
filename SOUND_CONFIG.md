@@ -1,10 +1,10 @@
-# Sound configuration (Fabric 1.21.1)
+# Sound configuration (NeoForge 26.3)
 
 Better Block Sounds Fork works without YACL or Mod Menu. On the first launch it creates `config/bbsf/sounds.json` using the bundled sound definitions and block-tag rules.
 
 ## In-game editor
 
-Install YetAnotherConfigLib **3.6.6 for Fabric 1.21.1** and Mod Menu **11.0.3** to use the **Configure** button in Mod Menu. Both mods are optional: BBSF runs with neither, and manual JSON editing remains fully available. The former `/bbsf config` command was removed because opening the GUI from the command handler was unreliable.
+Install YetAnotherConfigLib **3.9.7+26.3-neoforge** to enable the **Config** button for BBSF in the NeoForge Mods screen. YACL is optional; without it the JSON file is still fully supported. The `/bbsf config` and `/bbsf reload` Fabric commands are not part of the NeoForge version.
 
 The editor has four tabs:
 
@@ -49,7 +49,7 @@ This example illustrates the schema. Preserve any existing sound definitions and
 
 A rule target beginning with `#` is a block tag. The tag must actually exist in the game's datapacks. A target without `#` is a specific registered block ID.
 
-After changing the JSON externally, run the client-side command `/bbsf reload` or restart Minecraft. Loading invalid JSON preserves the previously loaded settings; invalid event IDs or rule references are skipped and logged.
+After changing the JSON externally, restart Minecraft. Loading invalid JSON preserves the previously loaded settings; invalid event IDs or rule references are skipped and logged.
 
 ## Defaults and compatibility
 
