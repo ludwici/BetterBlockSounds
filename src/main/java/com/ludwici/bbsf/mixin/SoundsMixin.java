@@ -1,6 +1,6 @@
 package com.ludwici.bbsf.mixin;
 
-import com.ludwici.bbsf.ModSoundTypes;
+import com.ludwici.bbsf.config.SoundConfigManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -16,7 +16,12 @@ public abstract class SoundsMixin {
     protected abstract Block asBlock();
 
     @Inject(method = "getSoundType", at = @At("TAIL"), cancellable = true)
-    private void getSoundGroupMixin(CallbackInfoReturnable<SoundType> cir){
-        cir.setReturnValue(ModSoundTypes.assignSounds(this.asBlock(), cir));
+    private void bbsf$getSoundType(CallbackInfoReturnable<SoundType> cir) {
+        SoundType original = cir.getReturnValue();
+        SoundType updated = SoundConfigManager.resolve(asBlock(), original);
+
+        if (updated != original) {
+            cir.setReturnValue(updated);
+        }
     }
 }

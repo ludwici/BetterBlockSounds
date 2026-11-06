@@ -20,6 +20,7 @@ sourceSets.main.resources {
 }
 
 repositories {
+    maven { url = 'https://maven.isxander.dev/releases' }
 }
 
 base {
@@ -74,7 +75,7 @@ configurations {
 }
 
 dependencies {
-
+    compileOnly "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
