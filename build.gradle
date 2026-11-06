@@ -119,8 +119,8 @@ publishing {
 publishMods {
     file = jar.archiveFile
     changelog = providers.fileContents(layout.projectDirectory.file("CHANGELOG.md")).asText
-    version = "${mod_version}+${minecraft_version}-neoforge"
-    displayName = "${mod_name} ${mod_version} - Minecraft ${minecraft_version} (NeoForge)"
+    version = "${mod_version}+${minecraft_version}"
+    displayName = jar.archiveFile.map { it.asFile.name }
     type = STABLE
     modLoaders.add("neoforge")
     dryRun = providers.gradleProperty("publishDryRun").map { it.toBoolean() }.orElse(false)
