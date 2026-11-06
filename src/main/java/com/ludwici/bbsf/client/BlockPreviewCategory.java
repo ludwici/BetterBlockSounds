@@ -35,10 +35,7 @@ public final class BlockPreviewCategory {
     private BlockPreviewCategory() {
     }
 
-    public static ConfigCategory create(SoundConfigData data) {
-        ConfigCategory.Builder category = ConfigCategory.createBuilder()
-                .name(Component.translatable("config.bbsf.block_preview"))
-                .tooltip(Component.translatable("config.bbsf.block_preview.tooltip"));
+    public static void addGroups(ConfigCategory.Builder category, SoundConfigData data) {
         Map<String, List<BlockEntry>> groups = new LinkedHashMap<>();
         Map<String, Set<String>> bundledTags = new HashMap<>();
 
@@ -96,7 +93,6 @@ public final class BlockPreviewCategory {
             category.group(options.build());
         }
 
-        return category.build();
     }
 
     private static boolean matches(Block block, String blockId, String target, Map<String, Set<String>> bundledTags) {

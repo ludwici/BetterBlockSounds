@@ -41,20 +41,23 @@ public final class SoundConfigScreen {
                         .build())
                 .build();
 
+        ConfigCategory.Builder manageTypes = ConfigCategory.createBuilder()
+                .name(Component.translatable("config.bbsf.manage_types"))
+                .tooltip(Component.translatable("config.bbsf.block_preview.tooltip"))
+                .group(ListOption.<String>createBuilder()
+                        .name(Component.translatable("config.bbsf.type_list"))
+                        .description(OptionDescription.of(Component.translatable("config.bbsf.type_list.description")))
+                        .binding(new ArrayList<>(defaults.soundTypes.keySet()), () -> typeEditor.names, value -> typeEditor.names = new ArrayList<>(value))
+                        .controller(StringControllerBuilder::create)
+                        .initial("custom_sound")
+                        .build());
+
+        BlockPreviewCategory.addGroups(manageTypes, data);
+
         YetAnotherConfigLib.Builder builder = YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("config.bbsf.title"))
                 .category(rules)
-                .category(BlockPreviewCategory.create(data))
-                .category(ConfigCategory.createBuilder()
-                        .name(Component.translatable("config.bbsf.manage_types"))
-                        .group(ListOption.<String>createBuilder()
-                                .name(Component.translatable("config.bbsf.type_list"))
-                                .description(OptionDescription.of(Component.translatable("config.bbsf.type_list.description")))
-                                .binding(new ArrayList<>(defaults.soundTypes.keySet()), () -> typeEditor.names, value -> typeEditor.names = new ArrayList<>(value))
-                                .controller(StringControllerBuilder::create)
-                                .initial("custom_sound")
-                                .build())
-                        .build())
+                .category(manageTypes.build())
                 .save(() -> {
                     data.rules = parseLines(ruleEditor.lines);
                     data.soundTypes = collectTypes(data.soundTypes, typeEditor.names);
