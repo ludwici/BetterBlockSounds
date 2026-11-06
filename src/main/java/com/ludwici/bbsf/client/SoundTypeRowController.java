@@ -6,7 +6,10 @@ import dev.isxander.yacl3.api.utils.Dimension;
 import dev.isxander.yacl3.gui.AbstractWidget;
 import dev.isxander.yacl3.gui.YACLScreen;
 import dev.isxander.yacl3.gui.controllers.string.StringController;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -82,16 +85,16 @@ public final class SoundTypeRowController implements Controller<String> {
         }
 
         @Override
-        public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta) {
             Dimension<Integer> dim = getDimension();
             int x = dim.x();
             int y = dim.y();
             int width = dim.width();
-            editor.render(graphics, mouseX, mouseY, delta);
+            editor.extractRenderState(graphics, mouseX, mouseY, delta);
 
             boolean hovered = mouseX >= arrowX() && mouseX < dim.xLimit() && mouseY >= y && mouseY < y + HEADER;
             drawButtonRect(graphics, arrowX(), y, dim.xLimit(), y + HEADER, hovered, true);
-            graphics.drawCenteredString(textRenderer, expanded ? "▼" : "▶", arrowX() + ARROW / 2, y + 6, -1);
+            centeredText(graphics, expanded ? "▼" : "▶", arrowX() + ARROW / 2, y + 6, -1);
 
             if (!expanded) {
                 return;
@@ -100,7 +103,7 @@ public final class SoundTypeRowController implements Controller<String> {
             int listTop = y + HEADER + 2;
 
             if (blocks.isEmpty()) {
-                graphics.drawString(textRenderer, Component.translatable("config.bbsf.type_preview.empty"), x + 5, listTop + 7, 0xFFAAAAAA, false);
+                graphics.text(textRenderer, Component.translatable("config.bbsf.type_preview.empty"), x + 5, listTop + 7, 0xFFAAAAAA, false);
             } else {
                 int end = Math.min(blocks.size(), scroll + VISIBLE);
 
@@ -113,12 +116,12 @@ public final class SoundTypeRowController implements Controller<String> {
                     }
 
                     ItemStack item = new ItemStack(entry.item());
-                    graphics.renderFakeItem(item, x + 4, itemY + 2);
+                    graphics.fakeItem(item, x + 4, itemY + 2);
                     int textWidth = Math.max(16, width - 33);
                     String name = textRenderer.plainSubstrByWidth(item.getHoverName().getString(), textWidth);
                     String id = textRenderer.plainSubstrByWidth(entry.blockId(), textWidth);
-                    graphics.drawString(textRenderer, name, x + 26, itemY + 1, 0xFFFFFFFF, false);
-                    graphics.drawString(textRenderer, id, x + 26, itemY + 12, 0xFFAAAAAA, false);
+                    graphics.text(textRenderer, Component.literal(name), x + 26, itemY + 1, 0xFFFFFFFF, false);
+                    graphics.text(textRenderer, Component.literal(id), x + 26, itemY + 12, 0xFFAAAAAA, false);
                 }
             }
 
@@ -126,17 +129,23 @@ public final class SoundTypeRowController implements Controller<String> {
                 int footerY = listTop + VISIBLE * ROW;
                 drawButtonRect(graphics, x + 1, footerY, x + 23, footerY + 18, mouseX >= x + 1 && mouseX < x + 23 && mouseY >= footerY && mouseY < footerY + 18, scroll > 0);
                 drawButtonRect(graphics, dim.xLimit() - 23, footerY, dim.xLimit() - 1, footerY + 18, mouseX >= dim.xLimit() - 23 && mouseX < dim.xLimit() - 1 && mouseY >= footerY && mouseY < footerY + 18, scroll + VISIBLE < blocks.size());
-                graphics.drawCenteredString(textRenderer, "◀", x + 12, footerY + 5, -1);
-                graphics.drawCenteredString(textRenderer, "▶", dim.xLimit() - 12, footerY + 5, -1);
-                graphics.drawCenteredString(textRenderer, (scroll + 1) + "–" + Math.min(scroll + VISIBLE, blocks.size()) + " / " + blocks.size(), x + width / 2, footerY + 5, -1);
+                centeredText(graphics, "◀", x + 12, footerY + 5, -1);
+                centeredText(graphics, "▶", dim.xLimit() - 12, footerY + 5, -1);
+                centeredText(graphics, (scroll + 1) + "–" + Math.min(scroll + VISIBLE, blocks.size()) + " / " + blocks.size(), x + width / 2, footerY + 5, -1);
             }
         }
 
+        private void centeredText(GuiGraphicsExtractor graphics, String value, int x, int y, int color) {
+            graphics.text(textRenderer, Component.literal(value), x - textRenderer.width(value) / 2, y, color, false);
+        }
+
         @Override
-        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+            double mouseX = event.x();
+            double mouseY = event.y();
             Dimension<Integer> dim = getDimension();
 
-            if (button == 0 && mouseY >= dim.y() && mouseY < dim.y() + HEADER && mouseX >= arrowX() && mouseX < dim.xLimit()) {
+            if (event.isLeft() && mouseY >= dim.y() && mouseY < dim.y() + HEADER && mouseX >= arrowX() && mouseX < dim.xLimit()) {
                 editor.unfocus();
                 expanded = !expanded;
                 scroll = 0;
@@ -145,7 +154,7 @@ public final class SoundTypeRowController implements Controller<String> {
                 return true;
             }
 
-            if (button == 0 && expanded && blocks.size() > VISIBLE) {
+            if (event.isLeft() && expanded && blocks.size() > VISIBLE) {
                 int footerY = dim.y() + HEADER + 2 + VISIBLE * ROW;
 
                 if (mouseY >= footerY && mouseY < footerY + FOOTER) {
@@ -161,7 +170,7 @@ public final class SoundTypeRowController implements Controller<String> {
                 }
             }
 
-            return editor.mouseClicked(mouseX, mouseY, button);
+            return editor.mouseClicked(event, doubleClick);
         }
 
         @Override
@@ -177,28 +186,28 @@ public final class SoundTypeRowController implements Controller<String> {
         }
 
         @Override
-        public boolean mouseReleased(double mouseX, double mouseY, int button) {
-            return editor.mouseReleased(mouseX, mouseY, button);
+        public boolean mouseReleased(MouseButtonEvent event) {
+            return editor.mouseReleased(event);
         }
 
         @Override
-        public boolean mouseDragged(double mouseX, double mouseY, int button, double dx, double dy) {
-            return editor.mouseDragged(mouseX, mouseY, button, dx, dy);
+        public boolean mouseDragged(MouseButtonEvent event, double dx, double dy) {
+            return editor.mouseDragged(event, dx, dy);
         }
 
         @Override
-        public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-            return editor.keyPressed(keyCode, scanCode, modifiers);
+        public boolean keyPressed(KeyEvent event) {
+            return editor.keyPressed(event);
         }
 
         @Override
-        public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
-            return editor.keyReleased(keyCode, scanCode, modifiers);
+        public boolean keyReleased(KeyEvent event) {
+            return editor.keyReleased(event);
         }
 
         @Override
-        public boolean charTyped(char character, int modifiers) {
-            return editor.charTyped(character, modifiers);
+        public boolean charTyped(CharacterEvent event) {
+            return editor.charTyped(event);
         }
 
         @Override
@@ -225,7 +234,7 @@ public final class SoundTypeRowController implements Controller<String> {
             }
 
             for (BlockPreviewCategory.BlockEntry block : blocks) {
-                if (block.blockId().toLowerCase(Locale.ROOT).contains(search) || block.item().getDescription().getString().toLowerCase(Locale.ROOT).contains(search)) {
+                if (block.blockId().toLowerCase(Locale.ROOT).contains(search) || new ItemStack(block.item()).getHoverName().getString().toLowerCase(Locale.ROOT).contains(search)) {
                     return true;
                 }
             }
