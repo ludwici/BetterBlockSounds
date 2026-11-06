@@ -4,18 +4,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ludwici.bbsf.config.SoundConfigData;
-import dev.isxander.yacl3.api.ConfigCategory;
-import dev.isxander.yacl3.api.LabelOption;
-import dev.isxander.yacl3.api.Option;
-import dev.isxander.yacl3.api.OptionDescription;
-import dev.isxander.yacl3.api.OptionGroup;
-import dev.isxander.yacl3.api.controller.ItemControllerBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
@@ -23,7 +17,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -35,10 +28,7 @@ public final class BlockPreviewCategory {
     private BlockPreviewCategory() {
     }
 
-    public static ConfigCategory create(SoundConfigData data) {
-        ConfigCategory.Builder category = ConfigCategory.createBuilder()
-                .name(Component.translatable("config.bbsf.block_preview"))
-                .tooltip(Component.translatable("config.bbsf.block_preview.tooltip"));
+    public static Map<String, List<BlockEntry>> collect(SoundConfigData data) {
         Map<String, List<BlockEntry>> groups = new LinkedHashMap<>();
         Map<String, Set<String>> bundledTags = new HashMap<>();
 
@@ -69,34 +59,11 @@ public final class BlockPreviewCategory {
             }
         }
 
-        if (groups.isEmpty()) {
-            category.group(OptionGroup.createBuilder()
-                    .name(Component.translatable("config.bbsf.block_preview"))
-                    .option(LabelOption.create(Component.translatable("config.bbsf.block_preview.empty")))
-                    .build());
+        for (List<BlockEntry> entries : groups.values()) {
+            entries.sort(java.util.Comparator.comparing(entry -> new ItemStack(entry.item()).getHoverName().getString(), String.CASE_INSENSITIVE_ORDER));
         }
 
-        for (Map.Entry<String, List<BlockEntry>> group : groups.entrySet()) {
-            List<BlockEntry> entries = group.getValue();
-            entries.sort(Comparator.comparing(BlockEntry::blockId));
-            OptionGroup.Builder options = OptionGroup.createBuilder()
-                    .name(Component.literal(group.getKey()));
-
-            for (BlockEntry entry : entries) {
-                Item item = entry.item();
-                options.option(Option.<Item>createBuilder()
-                        .name(Component.literal(entry.blockId()))
-                        .description(OptionDescription.of(Component.translatable("config.bbsf.block_preview.entry", entry.ruleTarget(), group.getKey())))
-                        .binding(item, () -> item, value -> {})
-                        .available(false)
-                        .controller(ItemControllerBuilder::create)
-                        .build());
-            }
-
-            category.group(options.build());
-        }
-
-        return category.build();
+        return groups;
     }
 
     private static boolean matches(Block block, String blockId, String target, Map<String, Set<String>> bundledTags) {
@@ -152,6 +119,6 @@ public final class BlockPreviewCategory {
         return result;
     }
 
-    private record BlockEntry(String blockId, String ruleTarget, Item item) {
+    public record BlockEntry(String blockId, String ruleTarget, Item item) {
     }
 }
