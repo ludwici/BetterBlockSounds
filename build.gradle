@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'me.modmuss50.mod-publish-plugin' version '2.2.1'
     id 'net.neoforged.moddev' version '2.0.141'
     id 'idea'
 }
@@ -112,6 +113,31 @@ publishing {
         maven {
             url "file://${project.projectDir}/repo"
         }
+    }
+}
+
+publishMods {
+    file = jar.archiveFile
+    changelog = providers.fileContents(layout.projectDirectory.file("CHANGELOG.md")).asText
+    version = "${mod_version}+${minecraft_version}-neoforge"
+    displayName = "${mod_name} ${mod_version} - Minecraft ${minecraft_version} (NeoForge)"
+    type = STABLE
+    modLoaders.add("neoforge")
+    dryRun = providers.gradleProperty("publishDryRun").map { it.toBoolean() }.orElse(false)
+
+    curseforge {
+        projectId = "1232054"
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN").orElse(providers.gradleProperty("CURSEFORGE_TOKEN"))
+        minecraftVersions.add(minecraft_version)
+        javaVersions.add(JavaVersion.VERSION_21)
+        client = true
+        server = true
+    }
+
+    modrinth {
+        projectId = "ZnMA9t3T"
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN").orElse(providers.gradleProperty("MODRINTH_TOKEN"))
+        minecraftVersions.add(minecraft_version)
     }
 }
 
