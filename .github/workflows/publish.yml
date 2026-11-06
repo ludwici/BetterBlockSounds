@@ -1,29 +1,11 @@
-name: Publish BBSF (approved release requests)
+name: Publish BBSF 1.21.1 NeoForge (approved requests)
 
 on:
   push:
     branches: ['1.21.1']
     paths:
       - '.github/release-requests/pending/*.json'
-  workflow_dispatch:
-    inputs:
-      validate_branch:
-        description: 'Build-only validation (never publishes)'
-        required: true
-        type: choice
-        default: 'none'
-        options:
-          - none
-          - '1.21.1'
-          - '1.21.1-fabric'
-          - '26.1.2-neo'
-          - '26.1.2-fabric'
-          - '26.2-neo'
-          - '26.2-fabric'
-          - '26.3-neo'
-          - '26.3-fabric'
-  schedule:
-    - cron: '7,22,37,52 * * * *'
+      - '.github/workflows/publish.yml'
 
 permissions:
   contents: read
@@ -34,22 +16,21 @@ concurrency:
 
 jobs:
   validate:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.validate_branch != 'none' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.validate_branch }}
+          ref: '1.21.1'
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ startsWith(inputs.validate_branch, '1.21.1') && '21' || '25' }}
+          java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
-      - name: Build only (no publication)
+      - name: Validate NeoForge build (no publication)
         run: bash ./gradlew clean build --no-daemon
 
   claim:
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.validate_branch == 'none' }}
+    needs: validate
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -78,13 +59,6 @@ jobs:
 
           allowed = {
               "1.21.1": ("neoforge", "21"),
-              "1.21.1-fabric": ("fabric", "21"),
-              "26.1.2-neo": ("neoforge", "25"),
-              "26.1.2-fabric": ("fabric", "25"),
-              "26.2-neo": ("neoforge", "25"),
-              "26.2-fabric": ("fabric", "25"),
-              "26.3-neo": ("neoforge", "25"),
-              "26.3-fabric": ("fabric", "25"),
           }
           now = datetime.now(timezone.utc)
           paths = []
@@ -105,7 +79,7 @@ jobs:
                   raise ValueError(f"{path}: unsupported release type")
               scheduled = datetime.strptime(request["publish_at_utc"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
               if scheduled > now:
-                  continue
+                  raise ValueError(f"{path}: future scheduling requires the workflow on the repository default branch; only due-now requests are supported here")
               if branch in seen_branches:
                   raise ValueError(f"{path}: multiple due requests for the same branch")
               seen_branches.add(branch)
@@ -128,12 +102,12 @@ jobs:
                   subprocess.run(["git", "mv", str(path), str(destination / path.name)], check=True)
               subprocess.run(["git", "config", "user.name", "github-actions[bot]"], check=True)
               subprocess.run(["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"], check=True)
-              subprocess.run(["git", "commit", "-m", "[skip ci] Claim approved BBSF release requests"], check=True)
+              subprocess.run(["git", "commit", "-m", "[skip ci] Claim approved BBSF NeoForge release requests"], check=True)
               subprocess.run(["git", "push", "origin", "HEAD:1.21.1"], check=True)
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
               output.write(f"ready={'true' if matrix else 'false'}\n")
               output.write("matrix=" + json.dumps({"include": matrix}, separators=(",", ":")) + "\n")
-          print(f"Claimed {len(paths)} approved requests; no platform upload happens in this job.")
+          print(f"Claimed {len(paths)} approved NeoForge release requests; upload only occurs in the guarded publish job.")
           PY
 
   publish:
