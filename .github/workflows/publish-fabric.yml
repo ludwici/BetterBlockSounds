@@ -1,0 +1,114 @@
+name: Publish BBSF 1.21.1 Fabric (approved requests)
+
+on:
+  push:
+    branches: ['1.21.1-fabric']
+    paths:
+      - '.github/release-requests/pending/*.json'
+      - '.github/workflows/publish-fabric.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bbsf-fabric-release-queue
+  cancel-in-progress: false
+
+jobs:
+  claim:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      ready: ${{ steps.request.outputs.ready }}
+      commit_sha: ${{ steps.request.outputs.commit_sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: '1.21.1-fabric'
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Claim approved Fabric release
+        id: request
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          import subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          root = Path(".github/release-requests")
+          pending = sorted((root / "pending").glob("*.json"))
+          if len(pending) > 1:
+              raise RuntimeError("Only one pending Fabric release request is supported at a time")
+          if not pending:
+              with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+                  output.write("ready=false\n")
+              print("No approved Fabric release request; no publication.")
+              raise SystemExit(0)
+
+          path = pending[0]
+          request = json.loads(path.read_text(encoding="utf-8"))
+          if request.get("authorization") != "PUBLISH_APPROVED":
+              raise RuntimeError(f"{path}: publication has not been approved")
+          if request.get("branch") != "1.21.1-fabric":
+              raise RuntimeError(f"{path}: only Fabric 1.21.1 can be published here")
+          if request.get("release_type") != "release":
+              raise RuntimeError(f"{path}: only stable Gradle releases are configured")
+          sha = request.get("commit_sha", "")
+          if not re.fullmatch(r"[0-9a-f]{40}", sha):
+              raise RuntimeError(f"{path}: invalid pinned commit SHA")
+          scheduled = datetime.strptime(request["publish_at_utc"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+          if scheduled > datetime.now(timezone.utc):
+              raise RuntimeError(f"{path}: scheduled time is in the future")
+          if not os.environ.get("CURSEFORGE_TOKEN") or not os.environ.get("MODRINTH_TOKEN"):
+              raise RuntimeError("Missing publishing tokens in GitHub Actions secrets")
+
+          subprocess.run(["git", "fetch", "--no-tags", "origin", "1.21.1-fabric"], check=True)
+          subprocess.run(["git", "cat-file", "-e", sha + "^{commit}"], check=True)
+          subprocess.run(["git", "merge-base", "--is-ancestor", sha, "origin/1.21.1-fabric"], check=True)
+          notes = subprocess.check_output(["git", "show", sha + ":CHANGELOG.md"], text=True)
+          if not notes.strip() or "RELEASE_NOTES_REQUIRED" in notes:
+              raise RuntimeError(f"{path}: missing release notes")
+          properties = subprocess.check_output(["git", "show", sha + ":gradle.properties"], text=True)
+          if "minecraft_version=1.21.1" not in properties or "mod_version=2.0.0" not in properties:
+              raise RuntimeError(f"{path}: unexpected release version")
+
+          destination = root / "claimed" / path.name
+          destination.parent.mkdir(parents=True, exist_ok=True)
+          if destination.exists():
+              raise RuntimeError(f"{destination}: request was already claimed")
+          subprocess.run(["git", "mv", str(path), str(destination)], check=True)
+          subprocess.run(["git", "config", "user.name", "github-actions[bot]"], check=True)
+          subprocess.run(["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"], check=True)
+          subprocess.run(["git", "commit", "-m", "[skip ci] Claim approved BBSF Fabric release request"], check=True)
+          subprocess.run(["git", "push", "origin", "HEAD:1.21.1-fabric"], check=True)
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write("ready=true\n")
+              output.write(f"commit_sha={sha}\n")
+          print(f"Claimed approved Fabric release at {sha}.")
+          PY
+
+  publish:
+    needs: claim
+    if: ${{ needs.claim.outputs.ready == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.claim.outputs.commit_sha }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build and publish Fabric 1.21.1
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: bash ./gradlew clean build publishMods --no-daemon
