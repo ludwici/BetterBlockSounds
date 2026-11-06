@@ -1,0 +1,7 @@
+{
+  "authorization": "PUBLISH_APPROVED",
+  "branch": "1.21.1-fabric",
+  "commit_sha": "6f4ccce49737ae0a951889dfd86f539477906cd5",
+  "publish_at_utc": "2026-11-06T00:00:00Z",
+  "release_type": "release"
+}
