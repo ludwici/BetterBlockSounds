@@ -71,6 +71,7 @@ jobs:
           python3 - <<'PY'
           import json
           import os
+          import re
           import subprocess
           from datetime import datetime, timezone
           from pathlib import Path
@@ -88,6 +89,7 @@ jobs:
           now = datetime.now(timezone.utc)
           paths = []
           matrix = []
+          seen_branches = set()
           for path in sorted(Path(".github/release-requests/pending").glob("*.json")):
               request = json.loads(path.read_text(encoding="utf-8"))
               if request.get("authorization") != "PUBLISH_APPROVED":
@@ -95,15 +97,26 @@ jobs:
               branch = request.get("branch")
               if branch not in allowed:
                   raise ValueError(f"{path}: unsupported branch {branch!r}")
+              sha = request.get("commit_sha", "")
+              if not re.fullmatch(r"[0-9a-f]{40}", sha):
+                  raise ValueError(f"{path}: a pinned 40-character commit_sha is required")
               release_type = request.get("release_type", "release")
               if release_type not in ("release", "beta", "alpha"):
                   raise ValueError(f"{path}: unsupported release type")
               scheduled = datetime.strptime(request["publish_at_utc"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
               if scheduled > now:
                   continue
+              if branch in seen_branches:
+                  raise ValueError(f"{path}: multiple due requests for the same branch")
+              seen_branches.add(branch)
+              subprocess.run(["git", "fetch", "--no-tags", "origin", branch], check=True)
+              subprocess.run(["git", "cat-file", "-e", sha + "^{commit}"], check=True)
+              notes = subprocess.check_output(["git", "show", sha + ":CHANGELOG.md"], text=True)
+              if "RELEASE_NOTES_REQUIRED" in notes or not notes.strip():
+                  raise RuntimeError(f"{path}: finalize CHANGELOG.md in the pinned commit before approval")
               loader, java = allowed[branch]
               paths.append(path)
-              matrix.append({"branch": branch, "loader": loader, "java": java, "release_type": release_type})
+              matrix.append({"branch": branch, "commit_sha": sha, "loader": loader, "java": java, "release_type": release_type})
           if paths:
               if not os.environ.get("CURSEFORGE_TOKEN") or not os.environ.get("MODRINTH_TOKEN"):
                   raise RuntimeError("Set both CURSEFORGE_TOKEN and MODRINTH_TOKEN repository secrets before publishing.")
@@ -134,7 +147,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ matrix.branch }}
+          ref: ${{ matrix.commit_sha }}
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
