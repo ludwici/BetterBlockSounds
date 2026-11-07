@@ -19,12 +19,12 @@ public abstract class YaclOptionEntryHeightMixin {
     @Final
     public AbstractWidget widget;
 
-    @Inject(method = "getItemHeight", at = @At("RETURN"), cancellable = true, remap = false, require = 0)
+    @Inject(method = "getItemHeight", at = @At("HEAD"), remap = false, require = 0)
     private void bbsf$expandSoundTypeRow(CallbackInfoReturnable<Integer> cir) {
         if (widget instanceof ContainerEventHandler container) {
             for (GuiEventListener child : container.children()) {
                 if (child instanceof SoundTypeRowController.SoundTypeRowWidget row) {
-                    cir.setReturnValue(Math.max(cir.getReturnValue(), row.getDimension().height() + 2));
+                    widget.setDimension(widget.getDimension().withHeight(row.getDimension().height()));
                     return;
                 }
             }
