@@ -7,13 +7,11 @@ import dev.isxander.yacl3.gui.AbstractWidget;
 import dev.isxander.yacl3.gui.YACLScreen;
 import dev.isxander.yacl3.gui.controllers.string.StringController;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 import java.util.Locale;
@@ -116,11 +114,6 @@ public final class SoundTypeRowController implements Controller<String> {
                         graphics.fill(x, itemY, x + width, itemY + ROW, 0x29000000);
                     }
 
-                    if (entry.hasBoundComponents()) {
-                        graphics.fakeItem(new ItemStack(entry.item()), x + 4, itemY + 2);
-                    } else {
-                        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, client.getModelManager().getBlockStateModelSet().getParticleMaterial(entry.block().defaultBlockState()).sprite(), x + 4, itemY + 2, 16, 16);
-                    }
                     int textWidth = Math.max(16, width - 33);
                     String name = textRenderer.plainSubstrByWidth(entry.displayName(), textWidth);
                     String id = textRenderer.plainSubstrByWidth(entry.blockId(), textWidth);
