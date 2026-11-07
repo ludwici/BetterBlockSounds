@@ -65,6 +65,15 @@ public final class BlockPreviewController implements Controller<String> {
         }
 
         @Override
+        public boolean isFocused() {
+            return false;
+        }
+
+        @Override
+        public void setFocused(boolean focused) {
+        }
+
+        @Override
         public boolean matchesSearch(String query) {
             String lower = query.toLowerCase(Locale.ROOT);
             return block.blockId().toLowerCase(Locale.ROOT).contains(lower) || block.displayName().toLowerCase(Locale.ROOT).contains(lower);
