@@ -14,7 +14,12 @@
   "message.bbsf.reloaded": "Better Block Sounds Fork: sound configuration reloaded.",
   "config.bbsf.manage_types": "Manage sound types",
   "config.bbsf.type_list": "Sound type identifiers",
-  "config.bbsf.type_list.description": "Add, rename or delete sound types. New definitions copy stone_ore; save and reopen this screen to edit their events. Remove or update rules that reference deleted IDs.",
+  "config.bbsf.type_list.description": "Add, rename, move or remove sound types. Expand an identifier to see affected blocks. Renaming a sound type also updates its rules. Reopen settings after adding a type to edit its events.",
   "config.bbsf.vanilla_types": "Vanilla sound types",
-  "config.bbsf.custom_types": "Custom sound types"
+  "config.bbsf.custom_types": "Custom sound types",
+  "config.bbsf.block_preview": "Affected blocks",
+  "config.bbsf.block_preview.tooltip": "Blocks using configured sound types. Includes blocks from tags, with their item icons and names in the client language. Reopen after changing rules.",
+  "config.bbsf.block_preview.empty": "No matching blocks found. World or datapack tags may not be loaded yet.",
+  "config.bbsf.block_preview.entry": "Rule: %s. Sound type: %s. This list is read-only; edit rules in the Block rules tab.",
+  "config.bbsf.type_preview.empty": "No blocks use this sound type."
 }
