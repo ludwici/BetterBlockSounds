@@ -1,17 +1,19 @@
 {
   "required": true,
+  "minVersion": "0.8.5",
   "package": "com.ludwici.bbsf.mixin",
   "compatibilityLevel": "JAVA_17",
+  "refmap": "bbsf.refmap.json",
   "mixins": [
     "SoundsMixin"
+  ],
+  "client": [
+    "YaclListEntryWidgetMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "overwrites": {
     "requireAnnotations": true
-  },
-  "client": [
-    "YaclListEntryWidgetMixin"
-  ]
+  }
 }

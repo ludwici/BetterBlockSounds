@@ -14,7 +14,7 @@ public abstract class SoundsMixin {
     @Shadow
     protected abstract Block asBlock();
 
-    @Inject(method = "getSoundType", at = @At("TAIL"), cancellable = true)
+    @Inject(method = "getSoundType(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/SoundType;", at = @At("RETURN"), cancellable = true)
     private void bbsf$getSoundType(CallbackInfoReturnable<SoundType> cir) {
         SoundType original = cir.getReturnValue();
         SoundType updated = SoundConfigManager.resolve(asBlock(), original);

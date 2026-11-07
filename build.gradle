@@ -44,6 +44,7 @@ legacyForge {
 
 dependencies {
     modCompileOnly "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 }
 
 def generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -60,6 +61,11 @@ def generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 }
 
 sourceSets.main.resources.srcDir generateModMetadata
+
+mixin {
+    add sourceSets.main, "bbsf.refmap.json"
+    config "bbsf.mixins.json"
+}
 
 tasks.named("jar") {
     manifest.attributes(["MixinConfigs": "bbsf.mixins.json"])
