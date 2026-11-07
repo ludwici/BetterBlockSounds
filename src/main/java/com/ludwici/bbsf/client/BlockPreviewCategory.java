@@ -55,7 +55,7 @@ public final class BlockPreviewCategory {
             }
 
             if (soundType != null) {
-                groups.computeIfAbsent(soundType, key -> new ArrayList<>()).add(new BlockEntry(blockId, matchingRule, item));
+                groups.computeIfAbsent(soundType, key -> new ArrayList<>()).add(new BlockEntry(blockId, matchingRule, item, block));
             }
         }
 
@@ -119,7 +119,7 @@ public final class BlockPreviewCategory {
         return result;
     }
 
-    public record BlockEntry(String blockId, String ruleTarget, Item item) {
+    public record BlockEntry(String blockId, String ruleTarget, Item item, Block block) {
         public String displayName() {
             return Component.translatable(item.getDescriptionId()).getString();
         }
