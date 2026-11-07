@@ -33,7 +33,7 @@ jobs:
                   raise RuntimeError("Mixin config does not reference the expected refmap")
               refmap = json.loads(archive.read(name))
               serialized = json.dumps(refmap)
-              if not all(value in serialized for value in ("asBlock", "getSoundType", "m_")):
+              if not all(value in serialized for value in ("getSoundType", "m_49962_")):
                   raise RuntimeError("Mixin refmap does not contain mapped Block methods")
               print(f"Validated {name} inside {archives[0].name}")
           PY
