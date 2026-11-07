@@ -115,10 +115,11 @@ public final class SoundTypeRowController implements Controller<String> {
                         graphics.fill(x, itemY, x + width, itemY + ROW, 0x29000000);
                     }
 
-                    ItemStack item = new ItemStack(entry.item());
-                    graphics.fakeItem(item, x + 4, itemY + 2);
+                    if (entry.hasBoundComponents()) {
+                        graphics.fakeItem(new ItemStack(entry.item()), x + 4, itemY + 2);
+                    }
                     int textWidth = Math.max(16, width - 33);
-                    String name = textRenderer.plainSubstrByWidth(item.getHoverName().getString(), textWidth);
+                    String name = textRenderer.plainSubstrByWidth(entry.displayName(), textWidth);
                     String id = textRenderer.plainSubstrByWidth(entry.blockId(), textWidth);
                     graphics.text(textRenderer, Component.literal(name), x + 26, itemY + 1, 0xFFFFFFFF, false);
                     graphics.text(textRenderer, Component.literal(id), x + 26, itemY + 12, 0xFFAAAAAA, false);
@@ -234,7 +235,7 @@ public final class SoundTypeRowController implements Controller<String> {
             }
 
             for (BlockPreviewCategory.BlockEntry block : blocks) {
-                if (block.blockId().toLowerCase(Locale.ROOT).contains(search) || new ItemStack(block.item()).getHoverName().getString().toLowerCase(Locale.ROOT).contains(search)) {
+                if (block.blockId().toLowerCase(Locale.ROOT).contains(search) || block.displayName().toLowerCase(Locale.ROOT).contains(search)) {
                     return true;
                 }
             }
