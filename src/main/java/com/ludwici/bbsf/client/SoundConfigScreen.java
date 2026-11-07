@@ -2,9 +2,7 @@ package com.ludwici.bbsf.client;
 
 import com.ludwici.bbsf.config.SoundConfigData;
 import com.ludwici.bbsf.config.SoundConfigManager;
-import dev.isxander.yacl3.api.ButtonOption;
 import dev.isxander.yacl3.api.ConfigCategory;
-import dev.isxander.yacl3.api.LabelOption;
 import dev.isxander.yacl3.api.ListOption;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
@@ -12,7 +10,6 @@ import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.FloatFieldControllerBuilder;
 import dev.isxander.yacl3.api.controller.StringControllerBuilder;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -50,7 +47,7 @@ public final class SoundConfigScreen {
                 .description(OptionDescription.of(Component.translatable("config.bbsf.type_list.description")))
                 .binding(new ArrayList<>(defaults.soundTypes.keySet()), () -> typeEditor.names, value -> typeEditor.names = new ArrayList<>(value))
                 .customController(entry -> {
-                    SoundTypeRowController controller = new SoundTypeRowController(entry);
+                    SoundTypeRowController controller = new SoundTypeRowController(entry, previews);
                     typeEditor.controllers.add(controller);
                     return controller;
                 })
@@ -62,31 +59,10 @@ public final class SoundConfigScreen {
                 .tooltip(Component.translatable("config.bbsf.block_preview.tooltip"))
                 .group(types);
 
-        ConfigCategory.Builder blockPreviews = ConfigCategory.createBuilder()
-                .name(Component.translatable("config.bbsf.block_preview"))
-                .tooltip(Component.translatable("config.bbsf.block_preview.tooltip"));
-
-        OptionGroup.Builder previewButtons = OptionGroup.createBuilder()
-                .name(Component.translatable("config.bbsf.preview_list"));
-
-        for (String id : data.soundTypes.keySet()) {
-            List<BlockPreviewCategory.BlockEntry> blocks = previews.getOrDefault(id, List.of());
-
-            previewButtons.option(ButtonOption.createBuilder()
-                    .name(Component.literal(id))
-                    .text(Component.literal("▶"))
-                    .description(OptionDescription.of(Component.translatable("config.bbsf.preview_button.description", blocks.size())))
-                    .action((screen, button) -> Minecraft.getInstance().setScreen(createPreviewScreen(screen, id, blocks)))
-                    .build());
-        }
-
-        blockPreviews.group(previewButtons.build());
-
         YetAnotherConfigLib.Builder builder = YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("config.bbsf.title"))
                 .category(rules)
                 .category(manageTypes.build())
-                .category(blockPreviews.build())
                 .save(() -> {
                     data.rules = parseLines(ruleEditor.lines);
                     data.soundTypes = collectTypes(data.soundTypes, typeEditor.names, typeEditor.controllers, data.rules);
@@ -118,36 +94,6 @@ public final class SoundConfigScreen {
         builder.category(customTypes.build());
 
         return builder.build().generateScreen(parent);
-    }
-
-    private static Screen createPreviewScreen(Screen parent, String soundType, List<BlockPreviewCategory.BlockEntry> blocks) {
-        OptionGroup.Builder affectedBlocks = OptionGroup.createBuilder()
-                .name(Component.translatable("config.bbsf.block_preview"));
-
-        if (blocks.isEmpty()) {
-            affectedBlocks.option(LabelOption.create(Component.translatable("config.bbsf.type_preview.empty")));
-        }
-
-        for (BlockPreviewCategory.BlockEntry block : blocks) {
-            affectedBlocks.option(Option.<String>createBuilder()
-                    .name(Component.literal(block.displayName()))
-                    .description(OptionDescription.of(Component.translatable("config.bbsf.block_preview.entry", block.ruleTarget(), soundType)))
-                    .binding(block.blockId(), block::blockId, value -> {})
-                    .customController(option -> new BlockPreviewController(option, block))
-                    .build());
-        }
-
-        ConfigCategory category = ConfigCategory.createBuilder()
-                .name(Component.literal(soundType))
-                .group(affectedBlocks.build())
-                .build();
-
-        return YetAnotherConfigLib.createBuilder()
-                .title(Component.translatable("config.bbsf.preview_screen", soundType))
-                .category(category)
-                .save(() -> {})
-                .build()
-                .generateScreen(parent);
     }
 
     private static OptionGroup createTypeGroup(String id, SoundConfigData.SoundDefinition definition, SoundConfigData.SoundDefinition defaults) {
