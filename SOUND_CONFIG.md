@@ -53,6 +53,6 @@ After changing the JSON externally, run the client-side command `/bbsf reload` o
 
 ## Defaults and compatibility
 
-The bundled `assets/bbsf/default_sounds.json` contains the original rules and sound-type definitions. When the user's JSON is created, the `vanilla` presets are expanded to explicit volume, pitch and registered sound IDs from Minecraft 1.20.1.
+The bundled `assets/bbsf/default_sounds.json` contains 1.20.1-compatible grouped rules and sound-type definitions. Existing `config/bbsf/sounds.json` files are preserved. When the user's JSON is created, the `vanilla` presets are expanded to explicit volume, pitch and registered sound IDs from Minecraft 1.20.1.
 
-The existing `data/bbsf/tags/blocks/*.json` files are unchanged. Sound events must refer to registered sound IDs. The client can use this mod without installing it on the server.
+The bundled `data/bbsf/tags/blocks/*.json` files define the block groups for Minecraft 1.20.1. Sound events must refer to registered sound IDs. The client can use this mod without installing it on the server.

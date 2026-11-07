@@ -1,6 +1,7 @@
 plugins {
     id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
     id 'maven-publish'
+    id 'me.modmuss50.mod-publish-plugin' version '2.2.1'
 }
 
 version = project.mod_version
@@ -65,5 +66,35 @@ publishing {
     }
 
     repositories {
+    }
+}
+
+publishMods {
+    file = remapJar.archiveFile
+    changelog = providers.fileContents(layout.projectDirectory.file("CHANGELOG.md")).asText
+    version = "${mod_version}+${minecraft_version}"
+    displayName = remapJar.archiveFile.map { it.asFile.name }
+    type = STABLE
+    modLoaders.add("fabric")
+    dryRun = providers.gradleProperty("publishDryRun").map { it.toBoolean() }.orElse(false)
+
+    curseforge {
+        projectId = "1232054"
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN").orElse(providers.gradleProperty("CURSEFORGE_TOKEN"))
+        minecraftVersions.add(minecraft_version)
+        javaVersions.add(JavaVersion.VERSION_17)
+        client = true
+        server = true
+        requires("fabric-api")
+        optional("yacl")
+    }
+
+    modrinth {
+        projectId = "ZnMA9t3T"
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN").orElse(providers.gradleProperty("MODRINTH_TOKEN"))
+        version = "${minecraft_version}+${mod_version}"
+        minecraftVersions.add(minecraft_version)
+        requires("fabric-api")
+        optional("yacl")
     }
 }
