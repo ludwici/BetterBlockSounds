@@ -6,10 +6,10 @@ import com.google.gson.JsonParser;
 import com.ludwici.bbsf.config.SoundConfigData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
@@ -60,7 +60,7 @@ public final class BlockPreviewCategory {
         }
 
         for (List<BlockEntry> entries : groups.values()) {
-            entries.sort(java.util.Comparator.comparing(entry -> new ItemStack(entry.item()).getHoverName().getString(), String.CASE_INSENSITIVE_ORDER));
+            entries.sort(java.util.Comparator.comparing(BlockEntry::displayName, String.CASE_INSENSITIVE_ORDER));
         }
 
         return groups;
@@ -120,5 +120,12 @@ public final class BlockPreviewCategory {
     }
 
     public record BlockEntry(String blockId, String ruleTarget, Item item) {
+        public String displayName() {
+            return Component.translatable(item.getDescriptionId()).getString();
+        }
+
+        public boolean hasBoundComponents() {
+            return item.builtInRegistryHolder().areComponentsBound();
+        }
     }
 }
