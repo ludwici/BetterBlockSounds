@@ -15,6 +15,28 @@ jobs:
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
       - run: bash ./gradlew build --no-daemon
+      - name: Verify production Mixin refmap
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          archives = [path for path in Path("build/libs").glob("*.jar") if not path.stem.endswith(("-sources", "-dev"))]
+          if len(archives) != 1:
+              raise RuntimeError(f"Expected one production jar, found: {archives}")
+
+          with ZipFile(archives[0]) as archive:
+              config = json.loads(archive.read("bbsf.mixins.json"))
+              name = config.get("refmap")
+              if name != "bbsf.refmap.json":
+                  raise RuntimeError("Mixin config does not reference the expected refmap")
+              refmap = json.loads(archive.read(name))
+              serialized = json.dumps(refmap)
+              if not all(value in serialized for value in ("asBlock", "getSoundType", "m_")):
+                  raise RuntimeError("Mixin refmap does not contain mapped Block methods")
+              print(f"Validated {name} inside {archives[0].name}")
+          PY
       - name: Validate publication configuration without uploading
         run: bash ./gradlew publishMods -PpublishDryRun=true --no-daemon
       - uses: actions/upload-artifact@v4
