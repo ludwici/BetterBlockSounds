@@ -1,9 +1,58 @@
-# Better Block Sounds Fork 2.0.0 (Forge / early NeoForge, Minecraft 1.20.1)
+# Sound configuration (NeoForge 1.20.1)
 
-This standalone branch uses the NeoForge team's **ModDevGradle Legacy Forge** plugin to target MinecraftForge 47.x. Minecraft 1.20.1 NeoForge was a Forge-compatible pre-hard-fork release; the NeoForge team recommends Forge for 1.20.1 today.
+Better Block Sounds Fork works without YACL or Mod Menu. On the first launch it creates `config/bbsf/sounds.json` using the bundled sound definitions and block-tag rules.
 
-The mod targets Java 17 and builds as `bbsf-forge-1.20.1`. No Fabric or Architectury dependency is required.
+## In-game editor
 
-All sound profiles and ordered block rules are stored in `config/bbsf/sounds.json`. The default rules are ported from the original Minecraft 1.20.1 project. The last matching rule wins. YACL `3.6.6+1.20.1-forge` is optional and enables the configuration screen inside the Forge Mods list; without YACL, edit the JSON manually and restart Minecraft.
+Install YetAnotherConfigLib **3.6.6+1.20.1-forge** to enable the **Config** button for BBSF in the Mods screen. YACL is optional; without it the JSON file is still fully supported. The `/bbsf config` and `/bbsf reload` Fabric commands are not part of the NeoForge version.
 
-The legacy multi-loader `1.20.1` branch remains preserved.
+The editor has four tabs:
+
+- **Block rules:** reorder, remove, and add rules using `#namespace:tag=sound_type` for block tags or `namespace:block=sound_type` for a single block. The last matching rule wins, exactly as in the original mod.
+- **Manage sound types:** add or delete sound-type identifiers. New types start as copies of `stone_ore`; save and reopen the editor to change their parameters. Update rules if you delete or rename a type.
+- **Vanilla sound types:** the built-in sound types whose identifiers start with `vanilla_` (such as `vanilla_tuff`).
+- **Custom sound types:** the original BBSF definitions (such as `stone_ore`) and any sound types you add. Both sound-type tabs edit volume, pitch and the five sound events (break, step, place, hit, fall).
+
+Click **Save** in YACL to write the JSON and apply your changes without restarting.
+
+## Manual editing
+
+No UI dependencies are needed for manual editing. The JSON file contains:
+
+```json
+{
+  "sound_types": {
+    "my_stone": {
+      "volume": 1.0,
+      "pitch": 0.9,
+      "break": "minecraft:block.deepslate.break",
+      "step": "minecraft:block.deepslate.step",
+      "place": "minecraft:block.deepslate.place",
+      "hit": "minecraft:block.deepslate.hit",
+      "fall": "minecraft:block.deepslate.fall"
+    }
+  },
+  "rules": [
+    {
+      "target": "minecraft:stone",
+      "sound_type": "my_stone"
+    },
+    {
+      "target": "#bbsf:stone_bricks",
+      "sound_type": "my_stone"
+    }
+  ]
+}
+```
+
+This example illustrates the schema. Preserve any existing sound definitions and rules that you want to keep.
+
+A rule target beginning with `#` is a block tag. The tag must actually exist in the game's datapacks. A target without `#` is a specific registered block ID.
+
+After changing the JSON externally, restart Minecraft. Loading invalid JSON preserves the previously loaded settings; invalid event IDs or rule references are skipped and logged.
+
+## Defaults and compatibility
+
+The bundled `assets/bbsf/default_sounds.json` contains the original rules and sound-type definitions. When the user's JSON is created, the `vanilla` presets are expanded to explicit volume, pitch and registered sound IDs from Minecraft 1.20.1.
+
+The bundled `data/bbsf/tags/blocks/*.json` files contain Minecraft 1.20.1-compatible block groups. Existing personal sound configurations are preserved. Sound events must refer to registered sound IDs. The client can use this mod without installing it on the server.

@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'me.modmuss50.mod-publish-plugin' version '2.2.1'
     id 'net.neoforged.moddev.legacyforge' version '2.0.141'
     id 'idea'
 }
@@ -9,7 +10,7 @@ version = project.mod_version
 group = project.mod_group_id
 
 base {
-    archivesName = "${mod_id}-forge-${minecraft_version}"
+    archivesName = "${mod_id}-neoforge-${minecraft_version}"
 }
 
 repositories {
@@ -21,7 +22,9 @@ repositories {
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 legacyForge {
-    version = "${minecraft_version}-${forge_version}"
+    enable {
+        neoForgeVersion = "${minecraft_version}-${neo_version}"
+    }
 
     runs {
         client {
@@ -65,4 +68,30 @@ tasks.named("jar") {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.release = 17
+}
+
+publishMods {
+    file = jar.archiveFile
+    changelog = providers.fileContents(layout.projectDirectory.file("CHANGELOG.md")).asText
+    version = "${mod_version}+${minecraft_version}"
+    displayName = jar.archiveFile.map { it.asFile.name }
+    type = STABLE
+    modLoaders.add("neoforge")
+    dryRun = providers.gradleProperty("publishDryRun").map { it.toBoolean() }.orElse(false)
+
+    curseforge {
+        projectId = "1232054"
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN").orElse(providers.gradleProperty("CURSEFORGE_TOKEN"))
+        minecraftVersions.add(minecraft_version)
+        javaVersions.add(JavaVersion.VERSION_17)
+        client = true
+        server = true
+    }
+
+    modrinth {
+        projectId = "ZnMA9t3T"
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN").orElse(providers.gradleProperty("MODRINTH_TOKEN"))
+        version = "${minecraft_version}+${mod_version}"
+        minecraftVersions.add(minecraft_version)
+    }
 }

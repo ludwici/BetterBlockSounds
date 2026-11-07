@@ -1,13 +1,9 @@
-name: Build Forge 1.20.1
-
+name: Build NeoForge 1.20.1
 on:
   push:
-    branches:
-      - 1.20.1-neo
+    branches: ['1.20.1-neo']
   pull_request:
-    branches:
-      - 1.20.1-neo
-
+    branches: ['1.20.1-neo']
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,8 +15,10 @@ jobs:
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
       - run: bash ./gradlew build --no-daemon
+      - name: Validate publication configuration without uploading
+        run: bash ./gradlew publishMods -PpublishDryRun=true --no-daemon
       - uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: bbsf-forge-1.20.1
+          name: bbsf-neoforge-1.20.1
           path: build/libs/*.jar
